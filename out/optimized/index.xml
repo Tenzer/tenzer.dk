@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tenzer.dk</title>
+    <link>https://tenzer.dk/</link>
+    <description>Recent content on Tenzer.dk</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 30 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://tenzer.dk/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Replacing the icon of a Mac application</title>
+      <link>https://tenzer.dk/replacing-the-icon-of-a-mac-application/</link>
+      <pubDate>Sat, 30 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/replacing-the-icon-of-a-mac-application/</guid>
+      <description>&lt;p&gt;I use a MacBook Pro for my daily computer needs. Not long after I got it, I installed &lt;a href=&#34;https://www.eidac.de/?cat=40&#34;&gt;smcFanControl&lt;/a&gt; in order to increase the idle fan speed, as the laptop otherwise got a bit too hot for my liking, even when doing non-CPU intensive tasks on the machine.&lt;/p&gt;
+
+&lt;p&gt;There is one problem with smcFanControl though, the menu bar entry for the program can either be the temperature and/or fan speed or just an icon. Since the icon takes up considerately less space and I don&amp;rsquo;t need to know the temperature and fan speed, I opted for using the icon. It does however have a problem:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;before.png&#34; alt=&#34;Before image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In case you didn&amp;rsquo;t spot it, the smcFanControl on the far left is not in the same crisp, Retina resolution as the other icons are.&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s no options inside the program to change the icon, so I instead decided to have a look inside the application folder and see what I could find. In case you don&amp;rsquo;t know, each program inside the Applications folders is just an ordinary folder containing the files for the program, Mac just makes it look like it&amp;rsquo;s one executable behind the shiny icons.&lt;/p&gt;
+
+&lt;p&gt;I navigated inside &lt;code&gt;smcFanControl.app/Contents/Resources&lt;/code&gt; where I found a 21x21 PNG file named &lt;code&gt;smc.png&lt;/code&gt;. I tried to make a small modification to the image and restarted the program, and I could see it replaced the icon in the menu bar, bingo!&lt;/p&gt;
+
+&lt;p&gt;Now it was just a matter of finding a suitable replacement icon with a higher resolution. I went for &lt;a href=&#34;https://www.iconfinder.com/icons/174888/fan_icon&#34;&gt;this fan icon&lt;/a&gt;, edited the picture to remove the stand and made sure the image still was square afterwards, and then I replaced &lt;code&gt;smc.png&lt;/code&gt; with this new image and I now had this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;after.png&#34; alt=&#34;After image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Much better! I also replaced &lt;code&gt;smcover.png&lt;/code&gt; with the same image, otherwise would see the old icon when you clicked it to access the program.&lt;/p&gt;
+
+&lt;p&gt;Note: It seems like OS X automatically applies some thresholds to the image in order to make it proper two toned, and it also scales the image for you automatically so you don&amp;rsquo;t need to have the image in a specific resolution.&lt;/p&gt;
+
+&lt;p&gt;I hope this was useful to you. In case you have any comments to this guide or just want to get in touch with me, then find my on Twitter as &lt;a href=&#34;https://twitter.com/Tenzer&#34;&gt;@Tenzer&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Generating Subresource Integrity Checksums</title>
+      <link>https://tenzer.dk/generating-subresource-integrity-checksums/</link>
+      <pubDate>Wed, 23 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/generating-subresource-integrity-checksums/</guid>
+      <description>
+
+&lt;p&gt;The GitHub Engineering blog recently had a blog post on how they have added &lt;a href=&#34;http://githubengineering.com/subresource-integrity/&#34;&gt;Subresource Integrity&lt;/a&gt; (SRI) tags on their third party assets. Long story short, this is &lt;code&gt;integrity&lt;/code&gt; attribute you add to your &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; or &lt;code&gt;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot;&amp;gt;&lt;/code&gt; tags which point to external (ie. not inlined) assets. Supporting browsers will then check the checksum in the attribute against the file it has downloaded before it parses the file. This is to make sure the file hasn&amp;rsquo;t been tampered with and to avoid the browser loading malicious files because some third party hoster got a security problem.&lt;/p&gt;
+
+&lt;p&gt;When I saw the post it was something I wanted to try out. Looking at the post from GitHub it looked like it just was a matter of creating a SHA256 checksum of a file, base64 encode it and then add &lt;code&gt;integrity=&amp;quot;sha256-&amp;lt;base64 encoded checksum&amp;gt;&amp;quot;&lt;/code&gt; to the tag of where the file was loaded. On my Mac it was just a matter of running &lt;code&gt;shasum --algorithm 256 &amp;lt;file path&amp;gt;&lt;/code&gt; and then encode the checksum with &lt;code&gt;echo -n &amp;lt;checksum&amp;gt; | base64&lt;/code&gt;. I prepended &amp;ldquo;sha256-&amp;rdquo; to the output, stuffed it in the integrity parameter in a HTML file, but when I tried it out in Chrome (Update! Firefox 43 and Opera 32 has since added support for SRI as well), it denied loading the file with the following error message:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Failed to find a valid digest in the &amp;lsquo;integrity&amp;rsquo; attribute for resource &amp;lsquo;&lt;code&gt;&amp;lt;file path&amp;gt;&lt;/code&gt;&amp;rsquo; with computed SHA-256 integrity &amp;lsquo;&lt;code&gt;&amp;lt;base64 encoded checksum&amp;gt;&lt;/code&gt;&amp;rsquo;. The resource has been blocked.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A couple of questions popped into my head at this time. Why was my base64 encoded checksum double the length of the example provided in the GitHub post, and why was the checksum even base64 encoded? A SHA256 hash only consists of hexadecimal characters, so the extra encoding would only make it take up more space.&lt;/p&gt;
+
+&lt;p&gt;In my search for why it didn&amp;rsquo;t work as expected, I found &lt;a href=&#34;https://srihash.org/&#34;&gt;srihash.org&lt;/a&gt; which is a site that can generate the integrity parameter for you. It did however generate a SHA384 checksum instead, which wasn&amp;rsquo;t directly comparable to what I was testing (and required CORS enabled, which I don&amp;rsquo;t get the reason for), but even their SHA384 checksum which should be longer than my SHA256 checksum, was only 64 characters compared to my 88 characters.&lt;/p&gt;
+
+&lt;p&gt;I found the &lt;a href=&#34;https://github.com/mozilla/srihash.org&#34;&gt;source code&lt;/a&gt; for the website and saw that it depended on &lt;a href=&#34;https://github.com/neftaly/npm-sri-toolbox&#34;&gt;sri-toolbox&lt;/a&gt; which was the library which generated the checksum. Looking at its source code (a Node.js library) showed this as the function that did the part I was interested in replicating:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #408080; font-style: italic&#34;&gt;// Generate hash&lt;/span&gt;
+digest &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;function&lt;/span&gt; (algorithm, data) {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;return&lt;/span&gt; crypto
+        .createHash(algorithm)
+        .update(data, &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;utf8&amp;#39;&lt;/span&gt;)
+        .digest(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;base64&amp;quot;&lt;/span&gt;);
+},
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I thought that looked pretty much exactly the same as what I had attempted on the command line, until it finally dawned on me that the generated checksum, before it is base64 encoded, actually is a binary blob. I have always thought of a checksum as a string of hexadecimal digits as that is how it&amp;rsquo;s normally represented in checksum files and in the output from tools that can generate and check checksums. That is however just a representation of the &amp;ldquo;low level&amp;rdquo; checksum, which explains why the checksum is base64 encoded according to the SRI specifications. With this new found knowledge, I was then able to generate a correct checksum in Python that Chrome would accept.&lt;/p&gt;
+
+&lt;p&gt;In attempt to help out other people who may want to make use of this new technology in order to secure their users from malicious scripts, I&amp;rsquo;ll try to collect some examples of how to generate the checksums needed in some different environments:&lt;/p&gt;
+
+&lt;h2 id=&#34;shell&#34;&gt;Shell&lt;/h2&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; -n sha256-; &lt;span style=&#34;color: #BB6622; font-weight: bold&#34;&gt;\&lt;/span&gt;
+    cat &amp;lt;input file&amp;gt; | &lt;span style=&#34;color: #BB6622; font-weight: bold&#34;&gt;\&lt;/span&gt;
+    openssl dgst -sha256 -binary | &lt;span style=&#34;color: #BB6622; font-weight: bold&#34;&gt;\&lt;/span&gt;
+    base64
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;python&#34;&gt;Python&lt;/h2&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #0000FF; font-weight: bold&#34;&gt;base64&lt;/span&gt;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #0000FF; font-weight: bold&#34;&gt;hashlib&lt;/span&gt;
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color: #0000FF&#34;&gt;checksum&lt;/span&gt;(&lt;span style=&#34;color: #008000&#34;&gt;input&lt;/span&gt;):
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #008000&#34;&gt;isinstance&lt;/span&gt;(&lt;span style=&#34;color: #008000&#34;&gt;input&lt;/span&gt;, &lt;span style=&#34;color: #008000&#34;&gt;str&lt;/span&gt;):
+        &lt;span style=&#34;color: #408080; font-style: italic&#34;&gt;# This is so we can handle strings as input in Python 3&lt;/span&gt;
+        &lt;span style=&#34;color: #008000&#34;&gt;input&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #008000&#34;&gt;input&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;encode()
+
+    &lt;span style=&#34;color: #008000&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; hashlib&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;sha256(&lt;span style=&#34;color: #008000&#34;&gt;input&lt;/span&gt;)&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;digest()
+    hash_base64 &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; base64&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;b64encode(&lt;span style=&#34;color: #008000&#34;&gt;hash&lt;/span&gt;)&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;decode()
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;sha256-{}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;format(hash_base64)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;node-js&#34;&gt;Node.js&lt;/h2&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;var&lt;/span&gt; crypto &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; require(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;crypto&amp;#39;&lt;/span&gt;);
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;function&lt;/span&gt; checksum (input) {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;var&lt;/span&gt; hash &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; crypto.createHash(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;sha256&amp;#39;&lt;/span&gt;).update(input, &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;utf8&amp;#39;&lt;/span&gt;);
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;var&lt;/span&gt; hashBase64 &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; hash.digest(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;base64&amp;#39;&lt;/span&gt;);
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;sha256-&amp;#39;&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;+&lt;/span&gt; hashBase64;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;go&#34;&gt;Go&lt;/h2&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;import&lt;/span&gt; (
+    &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;crypto/sha256&amp;quot;&lt;/span&gt;
+    &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;encoding/base64&amp;quot;&lt;/span&gt;
+)
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;func&lt;/span&gt; Checksum(input []&lt;span style=&#34;color: #B00040&#34;&gt;byte&lt;/span&gt;) &lt;span style=&#34;color: #B00040&#34;&gt;string&lt;/span&gt; {
+    hash &lt;span style=&#34;color: #666666&#34;&gt;:=&lt;/span&gt; sha256.Sum256(input)
+    hash_base64 &lt;span style=&#34;color: #666666&#34;&gt;:=&lt;/span&gt; base64.StdEncoding.EncodeToString(hash[:])
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;sha256-&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;+&lt;/span&gt; hash_base64
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;ruby&#34;&gt;Ruby&lt;/h2&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;digest&amp;#39;&lt;/span&gt;
+&lt;span style=&#34;color: #008000&#34;&gt;require&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;base64&amp;#39;&lt;/span&gt;
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color: #0000FF&#34;&gt;checksum&lt;/span&gt;(input)
+    &lt;span style=&#34;color: #008000&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #880000&#34;&gt;Digest&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color: #880000&#34;&gt;SHA256&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;digest input
+    hash_base64 &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #880000&#34;&gt;Base64&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;.&lt;/span&gt;encode64(&lt;span style=&#34;color: #008000&#34;&gt;hash&lt;/span&gt;)
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;sha256-&lt;/span&gt;&lt;span style=&#34;color: #BB6688; font-weight: bold&#34;&gt;#{&lt;/span&gt;hash_base64&lt;span style=&#34;color: #BB6688; font-weight: bold&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;&lt;/span&gt;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;php&#34;&gt;PHP&lt;/h2&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #BC7A00&#34;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color: #0000FF&#34;&gt;checksum&lt;/span&gt;(&lt;span style=&#34;color: #19177C&#34;&gt;$input&lt;/span&gt;) {
+    &lt;span style=&#34;color: #19177C&#34;&gt;$hash&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #008000&#34;&gt;hash&lt;/span&gt;(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;sha256&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color: #19177C&#34;&gt;$input&lt;/span&gt;, &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;true&lt;/span&gt;);
+    &lt;span style=&#34;color: #19177C&#34;&gt;$hash_base64&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #008000&#34;&gt;base64_encode&lt;/span&gt;(&lt;span style=&#34;color: #19177C&#34;&gt;$hash&lt;/span&gt;);
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;sha256-&lt;/span&gt;&lt;span style=&#34;color: #BB6688; font-weight: bold&#34;&gt;$hash_base64&lt;/span&gt;&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;&lt;/span&gt;;
+}
+&lt;span style=&#34;color: #BC7A00&#34;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I hope this was useful to you. If you want to contribute examples in other languages, then please &lt;a href=&#34;https://twitter.com/Tenzer&#34;&gt;let me know&lt;/a&gt; or submit a pull request to the &lt;a href=&#34;https://github.com/Tenzer/tenzer.dk&#34;&gt;repository&lt;/a&gt; for my website.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nginx with dynamic upstreams</title>
+      <link>https://tenzer.dk/nginx-with-dynamic-upstreams/</link>
+      <pubDate>Sun, 26 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/nginx-with-dynamic-upstreams/</guid>
+      <description>
+
+&lt;p&gt;I recently made a setup at &lt;a href=&#34;https://www.falconsocial.com/&#34;&gt;work&lt;/a&gt; where I had a Nginx server facing the user, which would forward requests to a service running behind an &lt;a href=&#34;http://aws.amazon.com/elasticloadbalancing/&#34;&gt;AWS Elastic Load Balancer&lt;/a&gt; (aka. ELB). That in itself doesn&amp;rsquo;t sound like a difficult task, you just find the hostname for the ELB and point Nginx at it with a &lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass&#34;&gt;proxy_pass&lt;/a&gt; statement like this, right?&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/&lt;/span&gt; {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://service-1234567890.us-east-1.elb.amazonaws.com&lt;/span&gt;;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Test it out and - barring the firewall/security group configuration is set up right - it should work just fine. Some hours later you may however find the service is no longer working, even though no changes has been made. Calling the ELB endpoint directly works just fine, but calling it through Nginx just times out.&lt;/p&gt;
+
+&lt;h2 id=&#34;elb-endpoint-primer&#34;&gt;ELB endpoint primer&lt;/h2&gt;
+
+&lt;p&gt;In order to understand why the service suddenly stopped working, a quick introduction to how the ELB works is in order:&lt;/p&gt;
+
+&lt;p&gt;When you create an Elastic Load Balancer you will get a DNS record back, which AWS tell you to use for all access to the service. The DNS record is a round robin DNS record pointing at two or more IP addresses - depending on how many availability zones your service makes use of. The DNS record is set up with a 60 second time to live, meaning that there&amp;rsquo;s almost no caching of the record.&lt;/p&gt;
+
+&lt;p&gt;The short TTL allows AWS to quickly change the machines running the load balancer without having to do any elaborate virtual IP stuff in order to not disrupt service. That&amp;rsquo;s also the reason they specifically tell you to not look up the hostname and then send traffic to one of the IP addresses it returns, since that IP address will stop working as a load balancer for your service some undefined time in the future.&lt;/p&gt;
+
+&lt;h2 id=&#34;back-to-nginx&#34;&gt;Back to Nginx&lt;/h2&gt;
+
+&lt;p&gt;The reason this is a problem with Nginx is because when it sees a configuration like the one posted further up, it will do the DNS request for the hostname right away, and then use the result of that until the next time the configuration is reloaded. Before that time comes around the ELB may have changed IP addresses, leaving you with a Nginx that forwards requests to some addresses that no longer serve your service.&lt;/p&gt;
+
+&lt;h2 id=&#34;nginx-plus&#34;&gt;Nginx Plus&lt;/h2&gt;
+
+&lt;p&gt;One way to solve this problem is to pay for &lt;a href=&#34;https://www.nginx.com/products/on-the-fly-reconfiguration/&#34;&gt;Nginx Plus&lt;/a&gt; which adds the &lt;code&gt;resolve&lt;/code&gt; flag to the &lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_upstream_module.html#server&#34;&gt;&lt;code&gt;server&lt;/code&gt;&lt;/a&gt; directive in an &lt;code&gt;upstream&lt;/code&gt; group. That will make Nginx honour the TTL of the DNS record and occasionally re-resolve the record in order to get an updated list of servers to use.&lt;/p&gt;
+
+&lt;p&gt;Playing &lt;a href=&#34;https://www.nginx.com/products/pricing/&#34;&gt;$1.500 per year per server&lt;/a&gt; for this feature seems like an awful lot. Of course you also get the other features Nginx Plus brings, but if you don&amp;rsquo;t need them it becomes a prohibitively expensive upgrade.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-free-alternative&#34;&gt;The free alternative&lt;/h2&gt;
+
+&lt;p&gt;A much cheaper option is to write the configuration like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;resolver&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;172&lt;/span&gt;&lt;span style=&#34;color: #BA2121&#34;&gt;.16.0.23&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;set&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$upstream_endpoint&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://service-1234567890.us-east-1.elb.amazonaws.com&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/&lt;/span&gt; {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$upstream_endpoint&lt;/span&gt;;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will work and Nginx will honour the TTL of the DNS record and re-resolve it in case a request comes in and the cached entry has expired. But why is that?&lt;/p&gt;
+
+&lt;p&gt;The answer is in part found by the end of the documentation for the &lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass&#34;&gt;&lt;code&gt;proxy_pass&lt;/code&gt;&lt;/a&gt; directive which states:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A server name, its port and the passed URI can also be specified using variables:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://&lt;/span&gt;&lt;span style=&#34;color: #19177C&#34;&gt;$host$uri&lt;/span&gt;;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;or even like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$request&lt;/span&gt;;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this case, the server name is searched among the described &lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_upstream_module.html&#34;&gt;server groups&lt;/a&gt;, and, if not found, is determined using a &lt;a href=&#34;http://nginx.org/en/docs/http/ngx_http_core_module.html#resolver&#34;&gt;resolver&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We are basically making use of the altered behaviour when we provide &lt;code&gt;proxy_pass&lt;/code&gt; with a variable, but that does however require us to specify a DNS resolver in the configuration. The one used in my example should work for all servers inside AWS which run in either the default VPC or in EC2-Classic. You can always check against &lt;code&gt;/etc/resolv.conf&lt;/code&gt; to figure out which DNS server AWS has provided your server with and then use that.&lt;/p&gt;
+
+&lt;h2 id=&#34;caveat-regarding-the-forwarded-uri&#34;&gt;Caveat regarding the forwarded URI&lt;/h2&gt;
+
+&lt;p&gt;If the &lt;code&gt;location&lt;/code&gt; you set up in Nginx is not just &lt;code&gt;/&lt;/code&gt;, then you need to be aware of &lt;code&gt;proxy_pass&lt;/code&gt;&amp;rsquo;s slightly changing behaviour when given a variable as the parameter.&lt;/p&gt;
+
+&lt;p&gt;First things first, a quick recap of how &lt;code&gt;proxy_pass&lt;/code&gt; works during normal operation:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Normal behaviour&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Imagine we have an Nginx configuration containing this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/foo/&lt;/span&gt; {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://127.0.0.1:8080&lt;/span&gt;;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When you make a request to the site for &lt;code&gt;/foo/bar/baz&lt;/code&gt; then Nginx will forward the request to &lt;code&gt;http://127.0.0.1:8080/foo/bar/baz&lt;/code&gt;. If the configuration instead looked like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/foo/&lt;/span&gt; {
+    &lt;span style=&#34;color: #408080; font-style: italic&#34;&gt;# Note the trailing slash       ↓&lt;/span&gt;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://127.0.0.1:8080/&lt;/span&gt;;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then Nginx will strip the part of the URI specified in the &lt;code&gt;location&lt;/code&gt; directive and pass the rest on to the upstream server. A request to &lt;code&gt;/foo/bar/baz&lt;/code&gt; will thus be forwarded to &lt;code&gt;http://127.0.0.1:8080/bar/baz&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Changed behaviour&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When we use a variable as the parameter for &lt;code&gt;proxy_pass&lt;/code&gt; the behaviour shown above with the trailing slash changes. Say we have this configuration:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;resolver&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;172&lt;/span&gt;&lt;span style=&#34;color: #BA2121&#34;&gt;.16.0.23&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;set&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$upstream_endpoint&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://service-1234567890.us-east-1.elb.amazonaws.com/&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/foo/&lt;/span&gt; {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$upstream_endpoint&lt;/span&gt;;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When you make a request for &lt;code&gt;/foo/bar/baz&lt;/code&gt; for that configuration, then the forwarded request will instead go to &lt;code&gt;/&lt;/code&gt; and not &lt;code&gt;/bar/baz&lt;/code&gt; as expected.&lt;/p&gt;
+
+&lt;p&gt;The workaround for this is to remove the trailing slash from the upstream endpoint, and then rewrite it manually like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;resolver&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;172&lt;/span&gt;&lt;span style=&#34;color: #BA2121&#34;&gt;.16.0.23&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;set&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$upstream_endpoint&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://service-1234567890.us-east-1.elb.amazonaws.com&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/foo/&lt;/span&gt; {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;rewrite&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;^/foo/(.*)&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color: #19177C&#34;&gt;$1&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;break&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$upstream_endpoint&lt;/span&gt;;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When you then make a request to &lt;code&gt;/foo/bar/baz&lt;/code&gt; then the upstream will get a request for &lt;code&gt;/bar/baz&lt;/code&gt; like we wanted.&lt;/p&gt;
+
+&lt;h2 id=&#34;closing-words&#34;&gt;Closing words&lt;/h2&gt;
+
+&lt;p&gt;Just to make it clear, this doesn&amp;rsquo;t only affect setups using an ELB as an upstream server, but applies to any configuration where you use a changing DNS record as your upstream server in Nginx.&lt;/p&gt;
+
+&lt;p&gt;I hope this was useful to you. In case you have any comments to this guide or just want to get in touch with me, then find my on Twitter as &lt;a href=&#34;https://twitter.com/Tenzer&#34;&gt;@Tenzer&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Python Output Format</title>
+      <link>https://tenzer.dk/python-output-format/</link>
+      <pubDate>Fri, 13 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/python-output-format/</guid>
+      <description>&lt;p&gt;I use &lt;a href=&#34;http://www.sublimetext.com/&#34;&gt;Sublime Text&lt;/a&gt; as my editor of choice, and I have loved how simple but effective the &lt;a href=&#34;https://packagecontrol.io/packages/Pretty%20JSON&#34;&gt;Pretty JSON&lt;/a&gt; plugin has been at making minimized JSON chunks into easy readable, neatly indented blocks of code with just one key press.&lt;/p&gt;
+
+&lt;p&gt;Since I mainly do my programming in Python I found that I for debugging often print out variables from Python code, in order to get an easier glimpse of what data I am working on or what I have produced thus far. When you print out structures like lists, dictionaries and such, they will come out in a format that more or less resembles minimized JSON - not really the easiest thing to parse with your eyes, so I thought I would take a go at making a Pretty JSON plugin but for Python &lt;code&gt;print()&lt;/code&gt; output.&lt;/p&gt;
+
+&lt;p&gt;I found the &lt;a href=&#34;https://docs.python.org/3/library/tokenize.html&#34;&gt;tokenize&lt;/a&gt; module in the standard library which is able to tokenize Python code, and put it back together again based on tokens, which would make the parsing much easier for me than having to write regular expressions for each different type of value that I would run into.&lt;/p&gt;
+
+&lt;p&gt;Back in &lt;a href=&#34;https://github.com/Tenzer/PythonOutputFormat/commit/94253e5d885bb1bdc94f66a2313d06c73b43c9d8&#34;&gt;August 2014&lt;/a&gt; I wrote a working prototype of the plugin and was happily using it just myself, along with a couple of Python-coding colleagues at work I showed it to. Then nothing really happened to it for a long while until a colleague complained that the plugin wasn&amp;rsquo;t available in &lt;a href=&#34;https://packagecontrol.io/&#34;&gt;Package Control&lt;/a&gt; (the Sublime Text plugin installer) for easy installation. So I sat down and went over the code once more, made the plugin a bit more flexible and helpful, ie. by changing the syntax of the document to Python if it&amp;rsquo;s currently set to plain-text, and then I released it &lt;a href=&#34;https://packagecontrol.io/packages/Python%20Output%20Format&#34;&gt;as a plugin&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you want an example of what the plugin does before you go and install it, then look in the README file on the &lt;a href=&#34;https://github.com/Tenzer/PythonOutputFormat&#34;&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/Tenzer&#34;&gt;Let me know&lt;/a&gt; if you experience any problems with it or just want to tell me how much easier it has made your life :)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Guide: Docker Registry Frontend</title>
+      <link>https://tenzer.dk/guide-docker-registry-frontend/</link>
+      <pubDate>Sat, 17 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/guide-docker-registry-frontend/</guid>
+      <description>&lt;p&gt;If you have your own &lt;a href=&#34;https://tenzer.dk/guide-private-docker-registry/&#34;&gt;private Docker registry&lt;/a&gt; you might be wanting some kind of frontend for it, as &lt;code&gt;docker search [...]&lt;/code&gt; can only get you so far in regards to getting an overview of what the registry contains. Fortunately all the information you might want about the registry contents can be aquired through the &lt;a href=&#34;https://docs.docker.com/reference/api/registry_api/&#34;&gt;REST API&lt;/a&gt;, making it possible to present the data neatly on a website.&lt;/p&gt;
+
+&lt;p&gt;Konrad Kleine has made the &lt;a href=&#34;https://github.com/kwk/docker-registry-frontend&#34;&gt;docker-registry-frontend&lt;/a&gt; project to do just that. It&amp;rsquo;s a client-only AngularJS based web app which calls the Docker registry API directly and serves it up in a neat web interface (&lt;a href=&#34;https://github.com/kwk/docker-registry-frontend/wiki/Features&#34;&gt;screenshots here&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;While he does provide a &lt;a href=&#34;https://github.com/kwk/docker-registry-frontend/blob/master/Dockerfile&#34;&gt;Dockerfile&lt;/a&gt; which builds and run the interface, I would rather just serve the files via the Nginx server which already run in front of the registry.&lt;/p&gt;
+
+&lt;p&gt;I am going to presume you have set up a private registry like described in &lt;a href=&#34;https://tenzer.dk/guide-private-docker-registry/&#34;&gt;my guide&lt;/a&gt;. First you have to install the dependencies we need; Git for getting the code and Node.js + NPM for building it. We also make a symlink to the Node.js executable so it can be called with just &lt;code&gt;node&lt;/code&gt; as some NPM packages&amp;rsquo; install scripts rely on that:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install git nodejs npm
+sudo ln -s /usr/bin/nodejs /usr/local/bin/node
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then switch to the Docker user and clone the Git repository into a folder called &lt;code&gt;frontend&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo su - docker
+git clone https://github.com/kwk/docker-registry-frontend.git frontend
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then enter the folder, install the Node.js and Bower packages and then build the site with Grunt:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;cd&lt;/span&gt; frontend/
+npm install
+node_modules/.bin/bower install
+node_modules/.bin/grunt build
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The build files are then available inside the &lt;code&gt;/home/docker/frontend/dist/&lt;/code&gt; folder. Before the site can be served we have to copy and adjust two JSON files containing some metadata the frontend need. The first one, &lt;code&gt;app-version.json&lt;/code&gt;, can be generated like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;{&lt;/span&gt;
+&lt;span style=&#34;color: #BA2121&#34;&gt;    &amp;quot;git&amp;quot;: {&lt;/span&gt;
+&lt;span style=&#34;color: #BA2121&#34;&gt;        &amp;quot;sha1&amp;quot;: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;$(&lt;/span&gt;git log --pretty&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;format:%h -n 1&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;&amp;quot;,&lt;/span&gt;
+&lt;span style=&#34;color: #BA2121&#34;&gt;        &amp;quot;ref&amp;quot;: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;$(&lt;/span&gt;git branch | cut -c 3-&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span style=&#34;color: #BA2121&#34;&gt;    }&lt;/span&gt;
+&lt;span style=&#34;color: #BA2121&#34;&gt;}&amp;#39;&lt;/span&gt; &amp;gt; dist/app-version.json
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The second file, &lt;code&gt;registry-host.json&lt;/code&gt;, contain the hostname and port number of where the registry is located at, and is used to create copy/pastable &lt;code&gt;docker pull&lt;/code&gt; commands in the web interface. Create a file at &lt;code&gt;dist/registry-host.json&lt;/code&gt; and fill it out like this (adjust the hostname and port number as needed):&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;{
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;&amp;quot;host&amp;quot;&lt;/span&gt;: &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;docker.domain.com&amp;quot;&lt;/span&gt;,
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;&amp;quot;port&amp;quot;&lt;/span&gt;: &lt;span style=&#34;color: #666666&#34;&gt;443&lt;/span&gt;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The last thing to do is to change our Nginx configuration to serve this interface. You can use this Nginx configuration and modify to suit you:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;upstream&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;docker&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;server&lt;/span&gt; 127.0.0.1:&lt;span style=&#34;color: #666666&#34;&gt;5000&lt;/span&gt;; }
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;server&lt;/span&gt; {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;80&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;443&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;ssl&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;ssl_certificate&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;cert.pem&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;ssl_certificate_key&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;cert.key&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;client_max_body_size&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;500M&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;Host&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$host&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Docker&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;Registry&amp;quot;&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic_user_file&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/home/docker/auth&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;root&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/home/docker/frontend/dist&lt;/span&gt;; }
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/v1&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://docker&lt;/span&gt;; }
+
+    &lt;span style=&#34;color: #408080; font-style: italic&#34;&gt;# Endpoints which are not requested with authentication&lt;/span&gt;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/v1/_ping&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://docker&lt;/span&gt;; &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic&lt;/span&gt; &lt;span style=&#34;color: #880000&#34;&gt;off&lt;/span&gt;; }
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/v1/search&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://docker&lt;/span&gt;; &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic&lt;/span&gt; &lt;span style=&#34;color: #880000&#34;&gt;off&lt;/span&gt;; }
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then just reload the Nginx configuration with &lt;code&gt;sudo service nginx reload&lt;/code&gt;, open the Docker registry website in a browser, input your credentials and there you have it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Guide: Private Docker Registry</title>
+      <link>https://tenzer.dk/guide-private-docker-registry/</link>
+      <pubDate>Wed, 14 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/guide-private-docker-registry/</guid>
+      <description>
+
+&lt;p&gt;I got to play around with &lt;a href=&#34;https://www.docker.com/&#34;&gt;Docker&lt;/a&gt; lately at work, and for that we needed a private place to store Docker images. Since the other guides I found either were unnecessarily advanced, or hosted the registry inside a Docker instance, instead of making use of our existing server setup, I&amp;rsquo;ve gone ahead and made a guide for how I set it up.&lt;/p&gt;
+
+&lt;p&gt;This guide shows the steps to take on an Ubuntu machine, but it should be easy to apply to other operating systems.&lt;/p&gt;
+
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;We are going to use the official &lt;a href=&#34;https://github.com/docker/docker-registry&#34;&gt;Docker Registry&lt;/a&gt; Python project for this, but first, lets create a user to run the registry as:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo useradd --system --create-home docker
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We are going to install Docker Registry in a Python virtual environment, so lets install some packages for that:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install python-virtualenv libpython-dev liblzma-dev swig libssl-dev
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then lets switch to the &lt;code&gt;docker&lt;/code&gt; user to get it installed:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo su - docker
+virtualenv /home/docker/venv
+/home/docker/venv/bin/pip install docker-registry
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+
+&lt;p&gt;Next up we need to prepare a configuration file for Docker Registry. There&amp;rsquo;s a sample configuration file included in the installed Python package, so lets use that as a base:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;cp /home/docker/venv/lib/python2.7/site-packages/config/config_sample.yml /home/docker/config.yml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you open the configuration file, you will see there are different sections of the configuration, where most of them inherit settings from one above. Each of those sections specify a configuration &amp;ldquo;set&amp;rdquo; or &amp;ldquo;flavor&amp;rdquo;, and contains various settings regarding log levels, storage options and so on.&lt;/p&gt;
+
+&lt;p&gt;I won&amp;rsquo;t go into detail about how to set up your configuration file, but I suggest that you create a new flavor at the end of the file, where you inherit the settings from the existing flavor, which is the closest match to what you would like.&lt;/p&gt;
+
+&lt;p&gt;When that&amp;rsquo;s done and you have created any folders, AWS S3 buckets or whatever you may need according to your configuration, we need to get the Docker Registry started as a service.&lt;/p&gt;
+
+&lt;h2 id=&#34;upstart&#34;&gt;Upstart&lt;/h2&gt;
+
+&lt;p&gt;Upstart is probably the easiest way to set up a new service on Ubuntu so lets use that. Copy the following Upstart configuration to &lt;code&gt;/etc/init/docker-registry.conf&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;description &amp;quot;Docker Registry&amp;quot;
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+respawn
+
+setuid docker
+chdir /home/docker
+
+env DOCKER_REGISTRY_CONFIG=/home/docker/config.yml
+env SETTINGS_FLAVOR=custom
+env PATH=/home/docker/venv/docker-registry/bin:$PATH
+
+exec docker-registry
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should change the &lt;code&gt;SETTINGS_FLAVOR&lt;/code&gt; variable to the name of the flavor you created in the configuration file, and add any other environment variables you may need. Then you just need to start the service with:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo start docker-registry
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Check the log file at &lt;code&gt;/var/log/upstart/docker-registry.log&lt;/code&gt; and make sure it doesn&amp;rsquo;t spit out a bunch of Python stack traces. If you have &lt;code&gt;curl&lt;/code&gt; installed on the machine, you can also do a quick test by running &lt;code&gt;curl http://127.0.0.1:5000/&lt;/code&gt; in order to make sure it responds with &lt;code&gt;&amp;quot;docker-registry server&amp;quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;nginx&#34;&gt;Nginx&lt;/h2&gt;
+
+&lt;p&gt;Docker Registry does not provide any means of authentication or encryption for communication with clients, so you should put it behind an Nginx instance since it can provide that easily.&lt;/p&gt;
+
+&lt;p&gt;Install the Nginx version you prefer, here I go with &lt;code&gt;nginx-light&lt;/code&gt; since it contains all we need. We also install &lt;code&gt;apache2-utils&lt;/code&gt; since it contains the &lt;code&gt;htpasswd&lt;/code&gt; utility we are going to use shortly:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install nginx-light apache2-utils
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then replace the contents of &lt;code&gt;/etc/nginx/sites-available/default&lt;/code&gt; with something like the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;upstream&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;docker&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;server&lt;/span&gt; 127.0.0.1:&lt;span style=&#34;color: #666666&#34;&gt;5000&lt;/span&gt;; }
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;server&lt;/span&gt; {
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;80&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;listen&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;443&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;ssl&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;ssl_certificate&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;cert.pem&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;ssl_certificate_key&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;cert.key&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;client_max_body_size&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;500M&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;Host&lt;/span&gt; &lt;span style=&#34;color: #19177C&#34;&gt;$host&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Docker&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;Registry&amp;quot;&lt;/span&gt;;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic_user_file&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/home/docker/auth&lt;/span&gt;;
+
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://docker&lt;/span&gt;; }
+
+    &lt;span style=&#34;color: #408080; font-style: italic&#34;&gt;# Endpoints which are not requested with authentication&lt;/span&gt;
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/v1/_ping&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://docker&lt;/span&gt;; &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic&lt;/span&gt; &lt;span style=&#34;color: #880000&#34;&gt;off&lt;/span&gt;; }
+    &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;location&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/v1/search&lt;/span&gt; { &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;proxy_pass&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;http://docker&lt;/span&gt;; &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;auth_basic&lt;/span&gt; &lt;span style=&#34;color: #880000&#34;&gt;off&lt;/span&gt;; }
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class=&#39;admonition attention&#39;&gt;
+
+    &lt;p class=&#39;admonition-title&#39;&gt;Attention&lt;/p&gt;
+
+    &lt;p&gt;Docker expects the registry to use HTTPS, but I won&amp;rsquo;t go into how that is setup in Nginx as there are plenty of guides available on how to configure HTTPS already.&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+&lt;p&gt;Reload the Nginx configuration, and then create a user in the auth file with &lt;code&gt;htpasswd&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;sudo service nginx reload
+sudo htpasswd /home/docker/auth &amp;lt;username&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You will be asked what password you would like the user to have, and then you should be all set. On your client machine you will first have to log into the registry with your newly created user with &lt;code&gt;docker login &amp;lt;server URL&amp;gt;&lt;/code&gt; (it asks you for an e-mail address but it is not used for anything), and then you can search, push and pull from the Docker registry.&lt;/p&gt;
+
+&lt;p&gt;I hope you found this guide useful, and in case you have any comments to this guide or just want to get in touch with me, then find my on Twitter as &lt;a href=&#34;https://twitter.com/Tenzer&#34;&gt;@Tenzer&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Update!&lt;/strong&gt;&lt;br /&gt;
+I&amp;rsquo;ve made &lt;a href=&#34;https://tenzer.dk/guide-docker-registry-frontend/&#34;&gt;another guide&lt;/a&gt; on how to set up a frontend for your own registry, making it easier to navigate and manage.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>New website</title>
+      <link>https://tenzer.dk/new-website/</link>
+      <pubDate>Fri, 26 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/new-website/</guid>
+      <description>&lt;p&gt;It has been in the making for some time but now it&amp;rsquo;s finally out. I&amp;rsquo;ve made a new design for my website and in the process also switched it from being based on Wordpress to now being a static site.&lt;/p&gt;
+
+&lt;p&gt;Back in July my colleague &lt;a href=&#34;http://cknv.dk/&#34;&gt;Esben&lt;/a&gt; started work on his own static site generator, &lt;a href=&#34;https://github.com/cknv/beetle&#34;&gt;Beetle&lt;/a&gt;, and I got interested in the project shortly after. Within a month I made the first pull request to Beetle while also acting as a sparring partner to Esben&amp;rsquo;s development work.&lt;/p&gt;
+
+&lt;p&gt;For a while I had an urge to do something about my website which was more or less desserted for the last couple of years. The only thing I did with it was to update the Wordpress installation every few months due to new security issues being found in the project. So instead I thought that I would redo it all as a static site, with a new fresh, mobile and retina friendly, easy readable design, and I hope that also would help spark my urge to blog some more again (I have yet to prove that).&lt;/p&gt;
+
+&lt;p&gt;For inspiration of how the site could look and what content I should include, I looked at some of my friends&amp;rsquo; websites (&lt;a href=&#34;http://cknv.dk/&#34;&gt;cknv.dk&lt;/a&gt;, &lt;a href=&#34;https://mntr.dk/&#34;&gt;mntr.dk&lt;/a&gt;, &lt;a href=&#34;https://kenneth.io/&#34;&gt;kenneth.io&lt;/a&gt;) and found a &lt;a href=&#34;https://color.adobe.com/Flat-UI-color-theme-2469224/&#34;&gt;color scheme&lt;/a&gt; and a simple &lt;a href=&#34;http://fastr-demo.themes.kanishkkunal.in/&#34;&gt;Wordpress theme&lt;/a&gt; that I liked which I could base my own site upon.&lt;/p&gt;
+
+&lt;p&gt;I worked on the site on and off over the following months, finding bugs and limitations in Beetle that was solved along with Esben, and I also made a few plugins for Beetle that I needed (a &lt;a href=&#34;https://github.com/Tenzer/beetle-sass&#34;&gt;SASS compiler&lt;/a&gt;, &lt;a href=&#34;https://github.com/Tenzer/beetle-htmlmin&#34;&gt;HTML minifier&lt;/a&gt; and a &lt;a href=&#34;https://github.com/Tenzer/beetle-sitemap&#34;&gt;sitemap.xml generator&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Then on christmas eve, moments before the family dinner was about to start, I switched my website to point to this new wonder and announced it on &lt;a href=&#34;https://twitter.com/Tenzer/status/547800770742337536&#34;&gt;Twitter&lt;/a&gt;. It didn&amp;rsquo;t cause as much of a uproar as I expected, probably due to my timing, but I&amp;rsquo;m at least satisfied with what I have produced.&lt;/p&gt;
+
+&lt;p&gt;I have a few topics in mind going forward that I want to blog about, mostly operations/devops related stuff, such as:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;My new HP Microserver at home, running &lt;a href=&#34;https://smartos.org/&#34;&gt;SmartOS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Amazon Web Services related posts, ie. about the new &lt;a href=&#34;https://github.com/boto/boto3&#34;&gt;Boto3 Python library&lt;/a&gt; for working with the API&lt;/li&gt;
+&lt;li&gt;Tips and configuration examples for the &lt;a href=&#34;http://nginx.org/&#34;&gt;Nginx&lt;/a&gt; webserver&lt;/li&gt;
+&lt;li&gt;Recommendations and guides for how to monitor your applications and set up monitoring systems.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But I don&amp;rsquo;t want to limit myself to only those subjects, so don&amp;rsquo;t be surprised if other topics pop up here.&lt;/p&gt;
+
+&lt;p&gt;If there&amp;rsquo;s something you think I should talk about first, some topics that I missed or just some general feedback on the site, feel free to contact me on Twitter at &lt;a href=&#34;https://twitter.com/Tenzer&#34;&gt;@Tenzer&lt;/a&gt; or make a pull request on the &lt;a href=&#34;https://github.com/Tenzer/tenzer.dk&#34;&gt;repository&lt;/a&gt; for the site.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setting up Tweet Nest in Nginx</title>
+      <link>https://tenzer.dk/setting-up-tweet-nest-in-nginx/</link>
+      <pubDate>Fri, 23 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/setting-up-tweet-nest-in-nginx/</guid>
+      <description>&lt;p&gt;Today I&amp;rsquo;ve set up &lt;a href=&#34;http://pongsocket.com/tweetnest/&#34;&gt;Tweet Nest&lt;/a&gt; at &lt;a href=&#34;http://tweets.tenzer.dk/&#34;&gt;tweets.tenzer.dk&lt;/a&gt;. Tweet Nest is a simple application that archives all your tweets, and make it easy to search for old tweets you&amp;rsquo;ve written that you might want to find again. Tweet Nest comes by default with &lt;code&gt;.htaccess&lt;/code&gt; files containing an Apache mod_rewrite specific configuration, but since I&amp;rsquo;m using &lt;a href=&#34;http://nginx.org/&#34;&gt;Nginx&lt;/a&gt; that configuration won&amp;rsquo;t work for me.&lt;/p&gt;
+
+&lt;p&gt;The mod_rewrite rules are limited to rules for handling requests to &lt;code&gt;/sort&lt;/code&gt;, &lt;code&gt;/favorites&lt;/code&gt;, &lt;code&gt;/search&lt;/code&gt; and pages to show tweets for a specific month and day. In the .htaccess file they are specified as:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;RewriteEngine&lt;/span&gt; &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;On&lt;/span&gt;
+&lt;span style=&#34;color: #008000&#34;&gt;RewriteRule&lt;/span&gt; ^sort/?$ ./sort.php [L]
+&lt;span style=&#34;color: #008000&#34;&gt;RewriteRule&lt;/span&gt; ^favorites/?$ ./favorites.php [L]
+&lt;span style=&#34;color: #008000&#34;&gt;RewriteRule&lt;/span&gt; ^search/?$ ./search.php [L]
+&lt;span style=&#34;color: #008000&#34;&gt;RewriteRule&lt;/span&gt; ^([0-9]+)/([0-9]+)/?$ ./month.php?y=$1&amp;amp;m=$2
+&lt;span style=&#34;color: #008000&#34;&gt;RewriteRule&lt;/span&gt; ^([0-9]+)/([0-9]+)/([0-9]+)/?$ ./day.php?y=$1&amp;amp;m=$2&amp;amp;d=$3
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I have replaced those with the following Nginx rules, which are specified within the &lt;code&gt;server {}&lt;/code&gt; directive for the site:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;rewrite&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;^/sort&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/sort.php&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;rewrite&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;^/favorites&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/favorites.php&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;rewrite&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;^/search&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/search.php&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;rewrite&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;^/([0-9]+)/([0-9]+)/([0-9]+)?&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/day.php?y=&lt;/span&gt;&lt;span style=&#34;color: #19177C&#34;&gt;$1&amp;amp;m=$2&amp;amp;d=$3&lt;/span&gt;;
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;rewrite&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;^/([0-9]+)/([0-9]+)?&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;/month.php?y=&lt;/span&gt;&lt;span style=&#34;color: #19177C&#34;&gt;$1&amp;amp;m=$2&lt;/span&gt;;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;A few things to note:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;?&lt;/code&gt; at the end of the regular expression rules in the final two rules, means any extra parameters given in the URL will be ignored.&lt;/li&gt;
+&lt;li&gt;With the regular expression rule I have defined for the month view, I need it to be below the rule for showing a specific day, otherwise the month rule will catch all requests to specific days as well. I could probably modify the rule to not do this, but I like how clear it looks here.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Football pictures and video</title>
+      <link>https://tenzer.dk/football-pictures-and-video/</link>
+      <pubDate>Sat, 08 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/football-pictures-and-video/</guid>
+      <description>&lt;p&gt;A few weeks ago I watched the &lt;a href=&#34;http://copenhagen-towers.dk/&#34;&gt;Copenhagen Towers&lt;/a&gt;&amp;rsquo; (the American football team I play for) U19 team play the semi-finals in the national championships, and I did of course take pictures of it. They can all be found in the &lt;a href=&#34;https://www.flickr.com/photos/tenzer/sets/72157627619086069/&#34;&gt;Flickr gallery&lt;/a&gt; for the game.&lt;/p&gt;
+
+&lt;p&gt;Tuesday this week &lt;a href=&#34;http://jens-k.dk/&#34;&gt;Jens Rørbye&lt;/a&gt; - the media manager for Copenhagen Towers - contacted me and asked if I could help out with an interview of the teams American import quarterback player, JR Artozqui. &lt;a href=&#34;http://copenhagen-towers.dk/senior-elite/news/273-qb-jr-artozqui-signs-on-for-2012&#34;&gt;The news&lt;/a&gt; was that the player has renewed his contract for another season, so the interview was about that and living in Copenhagen.&lt;/p&gt;
+
+&lt;p&gt;The interview was recorded Wednesday and ended up being 20 minutes long. I spent my entire Wednesday and Thursday evenings on getting the interview edited. It was mostly a matter of getting the sound to be clear to make it easier to hear what the guys were saying. A bit of color correction was also required since the interview was shot on a grey day without much light, and without any artificial lighting. You can see the interview on &lt;a href=&#34;https://www.youtube.com/watch?v=bSNsvMz4oD4&amp;amp;cc_load_policy=1&#34;&gt;YouTube&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I have to say I am pretty satisfied with the finished product, and I&amp;rsquo;ve only received good responses from other members of the club. Especially when you consider the equipment we had available for the interview:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Canon 550D DSLR camera&lt;/li&gt;
+&lt;li&gt;Sigma 50mm f/1.4 lens&lt;/li&gt;
+&lt;li&gt;Hama tripod&lt;/li&gt;
+&lt;li&gt;Two microphones&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Apart from one of the microphones, I have all the above equipment. It was really a basic setup, but we could have used some extra light, for instance in the form of a reflector. Also, I need to be better in the future to see things which aren&amp;rsquo;t working out that good on camera while shooting. For instance, in the first part of the interview, JR is standing more or less with his back towards the camera, this worked out much better when shooting the second part of the interview by the water.&lt;/p&gt;
+
+&lt;p&gt;Today I am going to the national championship finals in American football, where I will have press access to the sideline of the field in order to take pictures of the Copenhagen Towers&amp;rsquo; U16 and U19 teams who both have qualified for the finals. Unfortunately the senior team I play on didn&amp;rsquo;t make it pass the semi-final. I have rented a Canon 70-200mm f/2.8L IS USM lens for the event today in the hope that it will make it possible for me to get slightly better shots than I usually have.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Concert photography is fun!</title>
+      <link>https://tenzer.dk/concert-photography-is-fun/</link>
+      <pubDate>Wed, 31 Aug 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/concert-photography-is-fun/</guid>
+      <description>&lt;p&gt;In an attempt on getting a bit of activity back here on my blog, I thought I might as well update a bit on what I&amp;rsquo;ve been doing lately.&lt;/p&gt;
+
+&lt;p&gt;A few weeks ago I went to the concert venue &lt;a href=&#34;http://gimle.dk/&#34;&gt;Gimle&lt;/a&gt; in Roskilde in order to watch some concerts, primarily with the Danish live drum and bass band &lt;a href=&#34;http://fukt.dk/&#34;&gt;F.U.K.T&lt;/a&gt; and electronic artist &lt;a href=&#34;http://rangleklods.com/&#34;&gt;Rangleklods&lt;/a&gt;. I had listened to both artists a fair bit prior to the concert, and the concert was free so it was really a no brainer to go.&lt;/p&gt;
+
+&lt;p&gt;I decided to try and take some pictures from the concerts in order to get some more experience in shooting low light photography, so the day of the concert I went out and rented a &lt;a href=&#34;http://www.canon-europe.com/For_Home/Product_Finder/Cameras/EF_Lenses/Standard_and_Medium_Telephoto/EF_50mm_f1.4_USM/&#34;&gt;Canon EF 50mm f/1.4 USM lens&lt;/a&gt; which would fit onto my &lt;a href=&#34;http://www.canon-europe.com/For_Home/Product_Finder/Cameras/Digital_SLR/EOS_550D/&#34;&gt;Canon EOS 550D (Rebel T2i) camera&lt;/a&gt;. I tested out the lens a bit prior to the concerts, and found it to not be that sharp when using the wide open apertures. I have also found reviews of the lens which state the same thing, and suggested stopping down to f/2.8 where it can deliver very sharp images. The lens was however much better for the purpose than any alternative I owned, since it either would have to be my &lt;a href=&#34;http://www.canon-europe.com/For_Home/Product_Finder/Cameras/EF_Lenses/EF-S/EF-S_18-55mm_f3.5-5.6_IS_II/&#34;&gt;Canon 18-55mm f/3.5-5.6 kit lens&lt;/a&gt; or the &lt;a href=&#34;http://www.canon-europe.com/For_Home/Product_Finder/Cameras/EF_Lenses/Macro/EF_100mm_f2.8_Macro_USM/&#34;&gt;Canon 100mm f/2.8 USM&lt;/a&gt; which would have too much zoom and not a wide enough aperture.&lt;/p&gt;
+
+&lt;p&gt;So I went to the concert, and I am very satisfied with the results I got out of it, considering it was my first time doing concert photography in the dark. But you can judge for yourself in the &lt;a href=&#34;https://www.flickr.com/photos/tenzer/sets/72157627485926578/&#34;&gt;Flickr set&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For my next concert set I hope to have gotten my hands on a &lt;a href=&#34;http://www.sigmaphoto.com/product/50mm-f14-ex-dg-hsm&#34;&gt;Sigma 50mm f/1.4 HSM lens&lt;/a&gt; which should be sharper wide open, which is really what you need for the low light shots, and be better built.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Zenphoto Sitemap 2.0.0</title>
+      <link>https://tenzer.dk/zenphoto-sitemap-2.0.0/</link>
+      <pubDate>Fri, 19 Feb 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/zenphoto-sitemap-2.0.0/</guid>
+      <description>&lt;p&gt;I have made a new version of the &lt;a href=&#34;http://www.zenphoto.org/&#34;&gt;Zenphoto&lt;/a&gt; gallery plugin, &lt;a href=&#34;https://tenzer.dk/projects/zenphoto-sitemap/&#34;&gt;Zenphoto Sitemap&lt;/a&gt;, available.&lt;/p&gt;
+
+&lt;p&gt;The new version is a rewrite of the plugin, in order to increase speed, decrease load and generally make the code easier to read, hence the version number. I have also included a README file in the package.&lt;/p&gt;
+
+&lt;p&gt;The new version can either be fetched from &lt;a href=&#34;https://tenzer.dk/projects/zenphoto-sitemap/&#34;&gt;my project page&lt;/a&gt;, or from the new &lt;a href=&#34;https://github.com/Tenzer/zenphoto-sitemap&#34;&gt;GitHub project page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I do have some ideas for ways to further improve the plugin, which can be seen on the project &lt;a href=&#34;https://github.com/Tenzer/zenphoto-sitemap/issues&#34;&gt;issue tracker&lt;/a&gt;, and feel free to report anything you would like to see and of course any bugs you may find.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Installing djbdns in an OpenSolaris zone</title>
+      <link>https://tenzer.dk/installing-djbdns-in-an-opensolaris-zone/</link>
+      <pubDate>Mon, 05 Oct 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/installing-djbdns-in-an-opensolaris-zone/</guid>
+      <description>
+
+&lt;p&gt;This guide shows you how to install &lt;a href=&#34;http://cr.yp.to/djbdns.html&#34;&gt;djbdns&lt;/a&gt; in an OpenSolaris zone. The zone is currently running OpenSolaris build 124, but the guide should work on other versions of OpenSolaris as well, though not tested. The zone is simply set up as a default ipkg OpenSolaris zone, without many default installed packages.&lt;/p&gt;
+
+&lt;p&gt;First we start of with the installation of some packages, including &lt;code&gt;sunstudio&lt;/code&gt; since we are going to use that to compile djbdns with:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pkg install sunstudio SUNWbtool
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That is probably going to take a while, since ~400 MB has to be downloaded.&lt;/p&gt;
+
+&lt;h2 id=&#34;daemontools&#34;&gt;daemontools&lt;/h2&gt;
+
+&lt;p&gt;You will first have to install &lt;a href=&#34;http://cr.yp.to/daemontools.html&#34;&gt;daemontools&lt;/a&gt; before we can move on. daemontools is used to start and stop the dnscache and tinydns services, plus making sure they are started again in case an issue should happen.&lt;/p&gt;
+
+&lt;p&gt;Start by downloading the source code for daemontools, and extract it afterwards:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;curl -O http://cr.yp.to/daemontools/daemontools-0.76.tar.gz
+gunzip daemontools-0.76.tar.gz
+tar xf daemontools-0.76.tar
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enter the newly extracted directory, and make a few modifications in order to use the Sun Studio compiler instead of GCC before trying to compile:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;cd&lt;/span&gt; admin/daemontools-0.76
+&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;cc -O2&amp;quot;&lt;/span&gt; &amp;gt; src/conf-cc
+&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;cc -s&amp;quot;&lt;/span&gt; &amp;gt; src/conf-ld
+package/install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now there has been added a line to &lt;code&gt;/etc/inittab&lt;/code&gt; which is supposed to keep the &lt;code&gt;svscan&lt;/code&gt; service running at all times. However, that line does not work properly on Solaris machines, which causes &lt;code&gt;svscan&lt;/code&gt; to restart every ten minutes. So you will have to edit the last line in &lt;code&gt;/etc/inittab&lt;/code&gt; concerning &lt;code&gt;svscanboot&lt;/code&gt;, and replace the line with the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;SV:123456:respawn:/command/svscanboot &amp;gt; /dev/msglog 2&amp;gt;&amp;amp;1 &amp;lt; /dev/null
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After that is done you have to reload &lt;code&gt;init&lt;/code&gt;, in order for it to pick up the new line. This is simply done by executing &lt;code&gt;init q&lt;/code&gt;. And daemontools is now installed and running.&lt;/p&gt;
+
+&lt;p&gt;Note that the executables installed can either be found in:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The &lt;code&gt;command/&lt;/code&gt; folder under which daemontools was extracted&lt;/li&gt;
+&lt;li&gt;Under &lt;code&gt;/command/&lt;/code&gt; or&lt;/li&gt;
+&lt;li&gt;Inside &lt;code&gt;/usr/local/bin/&lt;/code&gt;. Feel free to add any of these folder to your &lt;code&gt;PATH&lt;/code&gt; variable, or specify the full path when you want to use the programs.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;ucspi-tcp&#34;&gt;ucspi-tcp&lt;/h2&gt;
+
+&lt;p&gt;Next up is &lt;a href=&#34;http://cr.yp.to/ucspi-tcp.html&#34;&gt;ucspi-tcp&lt;/a&gt; which enables services to listen on TCP ports through the &lt;code&gt;tcpclient&lt;/code&gt; and &lt;code&gt;tcpserver&lt;/code&gt; commands.&lt;/p&gt;
+
+&lt;p&gt;Again, download and extract:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;curl -O http://cr.yp.to/ucspi-tcp/ucspi-tcp-0.88.tar.gz
+gunzip ucspi-tcp-0.88.tar.gz
+tar xf ucspi-tcp-0.88.tar
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We are basically doing the same modifications to ucspi-tcp as we did to daemontools:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;cd&lt;/span&gt; ucspi-tcp-0.88
+&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;cc -O2&amp;quot;&lt;/span&gt; &amp;gt; conf-cc
+&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;cc -s&amp;quot;&lt;/span&gt; &amp;gt; conf-ld
+make
+make setup check
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The installed binaries has been put inside &lt;code&gt;/usr/local/bin/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;djbdns&#34;&gt;djbdns&lt;/h2&gt;
+
+&lt;p&gt;Finally we are going to install the &lt;a href=&#34;http://cr.yp.to/djbdns.html&#34;&gt;djbdns&lt;/a&gt; package, which among others, contains the &lt;code&gt;dnscache&lt;/code&gt; and &lt;code&gt;tinydns&lt;/code&gt; servers.&lt;/p&gt;
+
+&lt;p&gt;Start of with the downloading and extracting:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;curl -O http://cr.yp.to/djbdns/djbdns-1.05.tar.gz
+gunzip djbdns-1.05.tar.gz
+tar xf djbdns-1.05.tar
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And once again, we will have to change the compiler settings before compiling&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #008000&#34;&gt;cd&lt;/span&gt; djbdns-1.05
+&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;cc -O2&amp;quot;&lt;/span&gt; &amp;gt; conf-cc
+&lt;span style=&#34;color: #008000&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;cc -s&amp;quot;&lt;/span&gt; &amp;gt; conf-ld
+make
+make setup check
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And then you are done. The binaries has been installed in &lt;code&gt;/usr/local/bin/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Since there are already many guides on setting up dnscache and tinydns, I won&amp;rsquo;t cover that here, but rather just focus on the OpenSolaris specific changes there&amp;rsquo;s needed in order to compile the above three pieces of software.&lt;/p&gt;
+
+&lt;p&gt;I have made some spec files for the three packages above, so they may in the future be available pre-compiled in the package system, but for now you have to do with this guide.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Updating an OpenSolaris zone</title>
+      <link>https://tenzer.dk/updating-an-opensolaris-zone/</link>
+      <pubDate>Sun, 04 Oct 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/updating-an-opensolaris-zone/</guid>
+      <description>&lt;p&gt;This is just a quick guide for people who need to update an OpenSolaris zone. First off, you need to shutdown the zone. This can either by done by using &lt;code&gt;init 5&lt;/code&gt; or &lt;code&gt;shutdown&lt;/code&gt; inside the zone, or by running any of the two commands with &lt;code&gt;zlogin&lt;/code&gt; from the global zone. A final not recommended possibility is to run &lt;code&gt;zoneadm -z &amp;lt;zonename&amp;gt; halt&lt;/code&gt; from the global zone.&lt;/p&gt;
+
+&lt;p&gt;After the zone is stopped, you will have to set the zone state to &amp;ldquo;ready&amp;rdquo;, in order for the file systems to be mounted:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;zoneadm -z &amp;lt;zonename&amp;gt; ready
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then you can start the update procedure:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pkg -R &amp;lt;path to zone&amp;gt;/root image-update
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And lastly, when the zone is upgraded you can boot up the zone again:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;zoneadm -z &amp;lt;zonename&amp;gt; boot
+&lt;/pre&gt;&lt;/div&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>Some thoughts about package dependencies</title>
+      <link>https://tenzer.dk/some-thoughts-about-package-dependencies/</link>
+      <pubDate>Tue, 28 Jul 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/some-thoughts-about-package-dependencies/</guid>
+      <description>
+
+&lt;p&gt;Last night I installed &lt;a href=&#34;http://wiki.slimdevices.com/index.php/Logitech_Media_Server&#34;&gt;SqueezeCenter&lt;/a&gt; (the server software used with Squeezebox&amp;rsquo;s) on my home server, since I want to use it together with &lt;a href=&#34;http://wiki.slimdevices.com/index.php/SqueezeSlave&#34;&gt;SqueezeSlave&lt;/a&gt; running on my server. That way I can play music from my server while I have a webinterface to control it from all computers on my network.&lt;/p&gt;
+
+&lt;p&gt;For the installation of SqueezeCenter I downloaded the .deb package, since it was going to be installed on my home &lt;a href=&#34;http://www.ubuntu.com/&#34;&gt;Ubuntu&lt;/a&gt; server. I ran &lt;code&gt;sudo dpkg -i squeezecenter_7.3.3_all.deb&lt;/code&gt;, which to my big disappointment showed that the dependency list for SqueezeCenter required MySQL server to be installed in either version 4.0 or 5.0. Since I already had MySQL server 5.1 installed, configured and running on the server, I didn&amp;rsquo;t want that dependency to be met, since that would cause an uninstallation of my existing MySQL server instance, due to the packages claiming to conflict.&lt;/p&gt;
+
+&lt;p&gt;My workaround to this was to extract the &lt;code&gt;control.tar.gz&lt;/code&gt; file from the .deb package by running &lt;code&gt;ar x squeezecenter_7.3.3_all.deb control.tar.gz&lt;/code&gt; (I could probably write an article on .deb packages later), and then extract the &lt;code&gt;control&lt;/code&gt; file from the &lt;code&gt;control.tar.gz&lt;/code&gt; archive: &lt;code&gt;tar xzf control.tar.gz ./control&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;control&lt;/code&gt; file basically contains the same information you can see by running &lt;code&gt;apt-cache show &amp;lt;package-name&amp;gt;&lt;/code&gt;, but it lets you edit the information. So I changed the existing &lt;code&gt;Depends&lt;/code&gt; line to include &amp;ldquo;mysql-server-5.1&amp;rdquo;, &amp;ldquo;mysql-client-5.1&amp;rdquo; and &amp;ldquo;libmysqlclient16-dev&amp;rdquo;, and then packed it all together again and it would then let me install the package without messing about with my MySQL server. The final product came out just fine, and the SqueezeCenter server works without a hitch.&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;a href=&#34;http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/&#34;&gt;a better way&lt;/a&gt; for extracting the files does exists, which makes it easier than doing it manually.&lt;/p&gt;
+
+&lt;p&gt;This morning in the shower I then came to think back on this, and thought that a better way could be made. Because when there will be a need to update the package, I will then have to do the same manual changes again to the package, unless the package maintainer has updated the dependency list to include MySQL 5.1. Also, this could just as well be the case with a package found in the APT repository, which could make this even more cumbersome, in case you update the packages on the system, and without noticing it, installs an updated version of a package, which doesn&amp;rsquo;t contain the modified dependency list. Then you could have to spend some time correcting the packages which should get uninstalled and old packages to install again.&lt;/p&gt;
+
+&lt;p&gt;Another case where I have been a bit irritated about some of the dependency listings is with the &amp;ldquo;sun-java6-plugin&amp;rdquo; package, which provides Java support to the installed browsers on the system. However, since Firefox 3.5 isn&amp;rsquo;t included in the list of dependencies for the package, you will have to install the Firefox 3 package in order to install the Java plugin. That means that you will need to have Firefox 3 installed, alongside Firefox 3.5, simply in order to satisfy the dependencies for the sun-java6-plugin package. &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/+source/sun-java6/+bug/267260&#34;&gt;Multiple&lt;/a&gt; &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/+source/sun-java6/+bug/367063&#34;&gt;bugreports&lt;/a&gt; exists about this, but no action seems to taken. Wouldn&amp;rsquo;t it be good to be able to take matters into your own hands, instead of either having to wait for the package maintainers to fix this, or set up your own APT repository where you create packages yourself with a corrected dependency list?&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s were I thought of a tool which simply should allow you to overwrite the dependency listings for a given package, regardless of package version. That way you could simply specify your own dependency list for a specific package, and don&amp;rsquo;t care about obscure dependencies again. The same tool could of course also be used for the other settings in the control file, such as the &lt;code&gt;Conflicts&lt;/code&gt; and &lt;code&gt;Replaces&lt;/code&gt; lines.&lt;/p&gt;
+
+&lt;p&gt;The tool should obviously hook into &lt;code&gt;dpkg&lt;/code&gt; in the process where it evaluates the above mentioned lines while handling packages, check if the package in question is set to be overwritten in any way, and if yes, then ie. update the dependency listings before dpkg evaluates it.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t how hard this would be to create, but I can see on the Debian dpkg mailing list that there has been some talk about making some hook functions and triggers, which may be able to do this, otherwise a fork of &lt;code&gt;apt-get&lt;/code&gt;/&lt;code&gt;aptitude&lt;/code&gt; could possibly do it.&lt;/p&gt;
+
+&lt;p&gt;Right now I don&amp;rsquo;t think that a change like this could make it into the official &lt;code&gt;dpkg&lt;/code&gt; source, since it would be a bit counter productive, regarding the updating and correctness of the packages in the public repositories, but when requests for changes to the packages are not being performed, I don&amp;rsquo;t see any other proper way.&lt;/p&gt;
+
+&lt;p&gt;One of the reasons behind this post is to get any feedback on the idea, and if you have any further insight into this, then information on how hard it would be to implement and how to do it is greatly appreciated.&lt;/p&gt;
+
+&lt;h2 id=&#34;update&#34;&gt;Update&lt;/h2&gt;
+
+&lt;p&gt;Perhaps the &lt;a href=&#34;https://packages.debian.org/equivs&#34;&gt;equivs&lt;/a&gt; package can be used for these kinds of things.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Configuring the Solaris DHCP server</title>
+      <link>https://tenzer.dk/configuring-the-solaris-dhcp-server/</link>
+      <pubDate>Sat, 23 May 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/configuring-the-solaris-dhcp-server/</guid>
+      <description>&lt;p&gt;As I recently had to configure the Solaris bundled DHCP server on a box, I though that I would write down the steps I took to get the task done, for everybody else to use and also for myself later on.&lt;/p&gt;
+
+&lt;p&gt;I will configure the server with some static entries for specific hosts, and also with a small pool of addresses for random users.&lt;/p&gt;
+
+&lt;p&gt;In order to get the DHCP server installed on OpenSolaris, you have to install the package named &lt;code&gt;SUNWdhcs&lt;/code&gt;. This is done by running:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec pkg install SUNWdhcs
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After the installation, you should start of by using the &lt;code&gt;dhcpconfig&lt;/code&gt; command to set up the initial configuration directory to hold the settings used by the DHCP server:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec dhcpconfig -D -r SUNWfiles -p /var/dhcp -a 192.168.0.1 -d tenzer.lan -h files -l 86400
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-D&lt;/code&gt; - Specify that we setting up a new instance of the DHCP service.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-r SUNWfiles&lt;/code&gt; - We want a plain text file store. Other options are SUNWbinfiles and SUNWnisplus, but I wont be covering those here.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p /var/dhcp&lt;/code&gt; - An absolute path to where the configuration files should be stored.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-a 192.168.0.1&lt;/code&gt; - The DNS server to use on the LAN.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-d tenzer.lan&lt;/code&gt; - The domain name to use for the network.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-h files&lt;/code&gt; - Specify where the host informations should be stored. Other values are &lt;code&gt;nisplus&lt;/code&gt; and &lt;code&gt;dns&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-l 86400&lt;/code&gt; - The lease time in seconds. 86400 seconds = 24 hours.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After that you have to create the network we are going to set up. This is done with the following command:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec dhcpconfig -N 192.168.0.0 -m 255.255.255.0 -t 192.168.0.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-N 192.168.0.0&lt;/code&gt; - Create a new network with the specified network address.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-m 255.255.255.0&lt;/code&gt; - The network mask to use for the network.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-t 192.168.0.1&lt;/code&gt; - Specifies the default gateway.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All the above entered network settings are put into macros, which each is a small assembly of configuration options, and which makes it easier to put a group of settings on specific hosts. You can see which macros there is currently created and their settings by running:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;dhtadm -P
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You will see that there are three macros created. One macro is named after your servers hostname, and contains the settings specified as system wide settings with the first &lt;code&gt;dhcpconfig&lt;/code&gt; command.
+One has the name of the network you just created, and contains those settings entered in the last command.
+The last macro named &lt;code&gt;Locale&lt;/code&gt; simply holds timezone information, with a setting claiming the amount of seconds your local timezone differs from UTC.&lt;/p&gt;
+
+&lt;p&gt;As you can see from the output, the current timeserver specified is set to &lt;code&gt;127.0.0.1&lt;/code&gt; which aren&amp;rsquo;t going to do any good for the DHCP clients, so we are going to correct that to &lt;code&gt;192.168.0.1&lt;/code&gt;, the same address used by our default gateway and DNS server. The change is done like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec dhtadm -M -m &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;)&lt;/span&gt; -e &lt;span style=&#34;color: #19177C&#34;&gt;Timeserv&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;192.168.0.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-M&lt;/code&gt; - We are going to modify a macro.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-m $(hostname)&lt;/code&gt; - This is the macro we are going to modify. $(hostname) will be replaced with your servers hostname by the shell.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-e Timeserv=192.168.0.1&lt;/code&gt; - The setting we want to change, and what it should be changed to.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Again, you can check that the setting is indeed changed with:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;dhtadm -P
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We are also going to alter the 192.168.0.0 macro, and set it to include the settings from the macro named after the hostname:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec -M -m 192.168.0.0 -e &lt;span style=&#34;color: #19177C&#34;&gt;Include&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The third command used to configure the DHCP server is &lt;code&gt;pntadm&lt;/code&gt;, which sets up settings for each host on the network. The following command adds a static DHCP entry for a host:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec pntadm -A 192.168.0.2 -c &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Comment&amp;quot;&lt;/span&gt; -f MANUAL -i 01001BFC92BC10 -m 192.168.0.0 -y 192.168.0.0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-A 192.168.0.2&lt;/code&gt; - Add the IP address 192.168.0.2.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c &amp;quot;Comment&amp;quot;&lt;/code&gt; - Specify a comment for the entry, for your own convenience.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-f MANUAL&lt;/code&gt; - We set the flag MANUAL in order to only assign this IP address to the MAC address specified.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-i 01001BFC92BC10&lt;/code&gt; - This sets the MAC address (Client_ID) for the host this entry goes for. Should be prepended with &amp;ldquo;01&amp;rdquo; to specify this is ethernet.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-m 192.168.0.0&lt;/code&gt; - This host is going to use the &amp;ldquo;192.168.0.0&amp;rdquo; macro.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-y&lt;/code&gt; - Verify that the macro entered actually exist.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;192.168.0.0&lt;/code&gt; - This is the network the address is assigned to.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The command to check the settings is:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pntadm -P 192.168.0.0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And now we add an IP address for any host on the network:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec pntadm -A 192.168.0.10 -m 192.168.0.0 -y 192.168.0.0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The same parameters account as before, but we have just left out a lot more options, since we don&amp;rsquo;t know which host is going to get this address.&lt;/p&gt;
+
+&lt;p&gt;The last thing to do, is to restart the DHCP server, in order for all the changes to take effect:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec svcadm restart dhcp-server
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And then you are done.&lt;/p&gt;
+
+&lt;p&gt;References: &lt;a href=&#34;http://docs.sun.com/app/docs/doc/816-4554/dhcptm-1?a=view&#34;&gt;docs.sun.com&lt;/a&gt; and man pages.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

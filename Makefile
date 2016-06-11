@@ -28,4 +28,5 @@ optimize:
 		/site/unoptimized/index.html \
 		--root /site/unoptimized \
 		--outroot /site/optimized
+	@cp out/unoptimized/index.xml out/optimized/index.xml
 	@echo '==> AssetGraph build done'
