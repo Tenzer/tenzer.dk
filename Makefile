@@ -27,6 +27,7 @@ optimize:
 		assetgraph/assetgraph-builder \
 		--root /site/unoptimized \
 		--outroot /site/optimized \
+		/site/unoptimized/images/logo.png \
 		/site/unoptimized/index.html \
 		/site/unoptimized/index.xml \
 		/site/unoptimized/keybase.txt \
