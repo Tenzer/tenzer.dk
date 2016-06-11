@@ -25,8 +25,11 @@ optimize:
 		--rm \
 		--volume="$(shell pwd)"/out:/site \
 		assetgraph/assetgraph-builder \
-		/site/unoptimized/index.html \
 		--root /site/unoptimized \
-		--outroot /site/optimized
-	@cp out/unoptimized/index.xml out/optimized/index.xml
+		--outroot /site/optimized \
+		/site/unoptimized/index.html \
+		/site/unoptimized/index.xml \
+		/site/unoptimized/keybase.txt \
+		/site/unoptimized/robots.txt \
+		/site/unoptimized/sitemap.xml
 	@echo '==> AssetGraph build done'

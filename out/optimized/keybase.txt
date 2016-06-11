@@ -1,0 +1,54 @@
+==================================================================
+https://keybase.io/tenzer
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://tenzer.dk
+  * I am tenzer (https://keybase.io/tenzer) on keybase.
+  * I have a public key ASBieeCfdeLPufZammQG8WO1S3ftHcI91EgYOvzY-CVHggo
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101f01468419025ad8b004f7e40439d44761b6c04e510082bf67b62df64a1d2fa0c0a",
+            "host": "keybase.io",
+            "kid": "01206279e09f75e2cfb9f65a9a6406f163b54b77ed1dc23dd448183afcd8f82547820a",
+            "uid": "e71cae655f449ab5ac43207ba4bde200",
+            "username": "tenzer"
+        },
+        "service": {
+            "hostname": "tenzer.dk",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.1"
+    },
+    "ctime": 1448396091,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1448396053,
+        "hash": "109b24ff71873cd572907f9fe1014169cf8f53230586883b84479c71a62d9bee560a08e72997710f34def461e93a5c33a43d73dc8aac8da8374c1f953467f5bc",
+        "seqno": 325318
+    },
+    "prev": "b6ab3856374d4ce99ee27e60e811e717a0d256dd7001b9dbe3d76521d84ab207",
+    "seqno": 17,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+g6Rib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgYnngn3Xiz7n2WppkBvFjtUt37R3CPdRIGDr82PglR4IKp3BheWxvYWTFAu97ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTAxZjAxNDY4NDE5MDI1YWQ4YjAwNGY3ZTQwNDM5ZDQ0NzYxYjZjMDRlNTEwMDgyYmY2N2I2MmRmNjRhMWQyZmEwYzBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwNjI3OWUwOWY3NWUyY2ZiOWY2NWE5YTY0MDZmMTYzYjU0Yjc3ZWQxZGMyM2RkNDQ4MTgzYWZjZDhmODI1NDc4MjBhIiwidWlkIjoiZTcxY2FlNjU1ZjQ0OWFiNWFjNDMyMDdiYTRiZGUyMDAiLCJ1c2VybmFtZSI6InRlbnplciJ9LCJzZXJ2aWNlIjp7Imhvc3RuYW1lIjoidGVuemVyLmRrIiwicHJvdG9jb2wiOiJodHRwczoifSwidHlwZSI6IndlYl9zZXJ2aWNlX2JpbmRpbmciLCJ2ZXJzaW9uIjoxfSwiY2xpZW50Ijp7Im5hbWUiOiJrZXliYXNlLmlvIGdvIGNsaWVudCIsInZlcnNpb24iOiIxLjAuMSJ9LCJjdGltZSI6MTQ0ODM5NjA5MSwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsIm1lcmtsZV9yb290Ijp7ImN0aW1lIjoxNDQ4Mzk2MDUzLCJoYXNoIjoiMTA5YjI0ZmY3MTg3M2NkNTcyOTA3ZjlmZTEwMTQxNjljZjhmNTMyMzA1ODY4ODNiODQ0NzljNzFhNjJkOWJlZTU2MGEwOGU3Mjk5NzcxMGYzNGRlZjQ2MWU5M2E1YzMzYTQzZDczZGM4YWFjOGRhODM3NGMxZjk1MzQ2N2Y1YmMiLCJzZXFubyI6MzI1MzE4fSwicHJldiI6ImI2YWIzODU2Mzc0ZDRjZTk5ZWUyN2U2MGU4MTFlNzE3YTBkMjU2ZGQ3MDAxYjlkYmUzZDc2NTIxZDg0YWIyMDciLCJzZXFubyI6MTcsInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RAlXlGYCs4FNPamTCiPvtCkdWnZTPOdVzIFAb7jOAim0+bzzsoZ+qbggt/1kAILjT2LB6R2kfYdbC7WHEkm/WWCKhzaWdfdHlwZSCjdGFnzQICp3ZlcnNpb24B
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tenzer
+
+==================================================================
