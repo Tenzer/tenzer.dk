@@ -1,0 +1,45 @@
+{{ if .IsPage }}
+    {{ $.Scratch.Add "title" (printf "%s - %s" .Title .Site.Title) }}
+    {{ $.Scratch.Add "description" .Summary }}
+{{ else }}
+    {{ $.Scratch.Add "title" .Site.Title }}
+    {{ $.Scratch.Add "description" "The personal website and blog for Jeppe Toustrup about open source technologies and photography." }}
+{{ end }}
+
+<!doctype html>
+<html lang='en'>
+    <head prefix='og: http://ogp.me/ns#'>
+        <meta charset='utf-8'>
+        <meta http-equiv='x-ua-compatible' content='ie=edge'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title>{{ $.Scratch.Get "title" }}</title>
+        <meta name='description' content='The personal website and blog for Jeppe Toustrup about open source technologies and photography.'>
+        <meta name='generator' content='Hugo {{ .Hugo.Version }}'>
+        <link rel='stylesheet' href='/css/style.css'>
+        <link rel='logo' href='/images/favicon.svg' type='image/svg+xml'>
+        <link rel='icon' href='/images/favicon.svg' sizes='any' type='image/svg+xml'>
+        <link rel='icon' href='/images/favicon.png' sizes='128x128' type='image/png'>
+        <link rel='icon' href='/favicon.ico' sizes='16x16 32x32 48x48 64x64' type='image/x-icon'>
+        <link rel='alternate' href='{{ .Site.RSSLink }}' type='application/rss+xml' title='{{ .Site.Title }}'>
+        <meta property='og:type' content='website'>
+        <meta property='og:url' content='{{ .Permalink }}'>
+        <meta property='og:site_name' content='{{ .Site.Title }}'>
+        <meta property='og:title' content='{{ $.Scratch.Get "title" }}'>
+        <meta property='og:description' content='{{ $.Scratch.Get "description" }}'>
+        <meta property='og:image' content='{{ .Site.BaseURL }}images/logo.png'>
+        <meta name='twitter:card' content='summary'>
+        <meta name='twitter:site' content='@Tenzer'>
+        <meta name='twitter:title' content='{{ $.Scratch.Get "title" }}'>
+        <meta name='twitter:description' content='{{ $.Scratch.Get "description" }}'>
+        <meta name='twitter:image' content='{{ .Site.BaseURL }}images/logo.png'>
+    </head>
+    <body>
+        <header>
+            <div class='header-container'>
+                <a href='/'>
+                    <img id='logo' src='/images/tenzerdk.png' alt='Tenzer.dk logo'>
+                </a>
+            </div>
+        </header>
+        <div class='container'>
+            <div class='content'>

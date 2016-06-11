@@ -1,0 +1,7 @@
+baseurl = "https://tenzer.dk/"
+title = "Tenzer.dk"
+publishdir = "out/unoptimized"
+pygmentsstyle = "default"
+
+[permalinks]
+post = "/:title/"

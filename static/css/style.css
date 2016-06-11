@@ -1,0 +1,55 @@
+body { background-color: #ECF0F1; color: #2C3E50; font-family: Georgia, serif; font-size: 20px; line-height: 1.6em; margin: 0; }
+
+a { color: #E74C3C; text-decoration: none; }
+
+a h1 { color: #2C3E50; }
+
+hr { color: #8c97a1; }
+
+header { background: #2C3E50; color: #ECF0F1; text-align: left; }
+
+.header-container { margin: auto; max-width: 700px; padding: 10px; }
+
+#logo { margin: 10px 0; max-height: 60px; max-width: 100%; }
+
+nav { display: -webkit-flex; display: flex; font-size: 1rem; margin-bottom: 20px; max-width: 400px; }
+
+nav a { color: #E74C3C; -webkit-flex: 1; flex: 1; }
+
+nav span { -webkit-flex: 1; flex: 1; }
+
+nav span.disabled { color: #8c97a1; }
+
+.container { background-image: linear-gradient(rgba(44, 62, 80, 0.4), rgba(44, 62, 80, 0)); background-image: -webkit-linear-gradient(top, rgba(44, 62, 80, 0.4), rgba(44, 62, 80, 0)); background-repeat: repeat-x; background-size: auto 20px; padding-top: 20px; }
+
+.content { margin: auto; max-width: 700px; padding: 0 10px; }
+
+.content img { display: block; margin: auto; max-width: 100%; }
+
+.posted-date { color: #8c97a1; font-size: 1rem; margin-top: 0; }
+
+h1 { line-height: 1; margin-bottom: 0.5rem; }
+
+pre { background-color: #f5f7f7; border: 1px dashed #cfd9db; max-width: 700px; overflow: auto; padding: 5px 10px; }
+
+pre code { background-color: inherit; border: none; padding: 0; }
+
+code { background-color: #f5f7f7; border: 1px dashed #cfd9db; padding: 5px; }
+
+blockquote { border-left: 3px solid #507192; color: #3e5871; font-style: italic; margin-left: 20px; padding-left: 10px; }
+
+ul li { list-style-type: circle; }
+
+.admonition-title { font-weight: bold; }
+
+.admonition { border: 1px solid #2C3E50; border-radius: 3px; margin: 20px 0; padding: 0 5px; }
+
+.admonition p:first-child { margin-top: 5px; }
+
+.admonition p:last-child { margin-bottom: 5px; }
+
+.admonition.warning, .admonition.attention { background-color: #ffd34e; }
+
+footer { font-size: 15px; margin: auto; max-width: 700px; text-align: center; }
+
+@media print { header, footer { display: none; } }
