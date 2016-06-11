@@ -1,5 +1,6 @@
 .PHONY: serve dist sass clean build optimize
-serve:
+
+serve: sass
 	@hugo server
 
 .PHONY: dist
