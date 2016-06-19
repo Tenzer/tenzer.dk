@@ -26,7 +26,7 @@
 
 &lt;p&gt;I navigated inside &lt;code&gt;smcFanControl.app/Contents/Resources&lt;/code&gt; where I found a 21x21 PNG file named &lt;code&gt;smc.png&lt;/code&gt;. I tried to make a small modification to the image and restarted the program, and I could see it replaced the icon in the menu bar, bingo!&lt;/p&gt;
 
-&lt;p&gt;Now it was just a matter of finding a suitable replacement icon with a higher resolution. I went for &lt;a href=&#34;https://www.iconfinder.com/icons/174888/fan_icon&#34;&gt;this fan icon&lt;/a&gt;, edited the picture to remove the stand and made sure the image still was square afterwards, and then I replaced &lt;code&gt;smc.png&lt;/code&gt; with this new image and I now had this:&lt;/p&gt;
+&lt;p&gt;Now it was just a matter of finding a suitable replacement icon with a higher resolution. I went for &lt;a href=&#34;https://www.iconfinder.com/icons/174888/fan_icon#size=256&#34;&gt;this fan icon&lt;/a&gt;, edited the picture to remove the stand and made sure the image still was square afterwards, and then I replaced &lt;code&gt;smc.png&lt;/code&gt; with this new image and I now had this:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;after.png&#34; alt=&#34;After image&#34; /&gt;&lt;/p&gt;
 

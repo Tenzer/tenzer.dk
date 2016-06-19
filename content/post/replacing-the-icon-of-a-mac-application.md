@@ -15,7 +15,7 @@ There's no options inside the program to change the icon, so I instead decided t
 
 I navigated inside `smcFanControl.app/Contents/Resources` where I found a 21x21 PNG file named `smc.png`. I tried to make a small modification to the image and restarted the program, and I could see it replaced the icon in the menu bar, bingo!
 
-Now it was just a matter of finding a suitable replacement icon with a higher resolution. I went for [this fan icon](https://www.iconfinder.com/icons/174888/fan_icon), edited the picture to remove the stand and made sure the image still was square afterwards, and then I replaced `smc.png` with this new image and I now had this:
+Now it was just a matter of finding a suitable replacement icon with a higher resolution. I went for [this fan icon](https://www.iconfinder.com/icons/174888/fan_icon#size=256), edited the picture to remove the stand and made sure the image still was square afterwards, and then I replaced `smc.png` with this new image and I now had this:
 
 ![After image](after.png)
 
