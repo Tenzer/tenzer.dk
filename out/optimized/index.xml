@@ -2,11 +2,71 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tenzer.dk</title>
-    <link>https://tenzer.dk/</link>
+    <link>https://tenzer.dk/index.xml</link>
     <description>Recent content on Tenzer.dk</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 30 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Nov 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://tenzer.dk/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Making a server - The plan</title>
+      <link>https://tenzer.dk/making-a-server---the-plan/</link>
+      <pubDate>Sun, 20 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tenzer.dk/making-a-server---the-plan/</guid>
+      <description>
+
+&lt;p&gt;I currently have a virtual server running at &lt;a href=&#34;https://www.hetzner.de/gb/&#34;&gt;Hetzner&lt;/a&gt;, it&amp;rsquo;s used for hosting this website plus a few other projects of mine. I&amp;rsquo;ve been contemplating rebuilding it from scratch, and think it could be good to blog about and to give you some tips in case you feel inspired to do the same.&lt;/p&gt;
+
+&lt;p&gt;The current server has been ad-hoc configured over the years, I instead plan to make the new server a lot more structured and instead make use of configuration management for setting it up, a continuous integration server for checking and executing the configuration, &amp;ldquo;ChatOps&amp;rdquo; for day-to-day system administration and tools, metrics for the system and services, etc.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-plan&#34;&gt;The plan&lt;/h2&gt;
+
+&lt;p&gt;My current plan looks like this, although it may change over time:&lt;/p&gt;
+
+&lt;h3 id=&#34;operating-system&#34;&gt;Operating system&lt;/h3&gt;
+
+&lt;p&gt;The current server runs &lt;a href=&#34;https://www.archlinux.org/&#34;&gt;Arch Linux&lt;/a&gt; and I want to continue using it for the new server. I like having the system constantly up to date while still having a stable system. I haven&amp;rsquo;t had any stability problems with running Arch on my server over the last 4 years I&amp;rsquo;ve been using it, and I quite like the light weight approach of the system as you only install the software you need on it. The current server is for instance an old VPS model with only 512 MB of RAM of which only ~115 MB is used for normal operations (26 MB are inside a Redis database).&lt;/p&gt;
+
+&lt;p&gt;Arch Linux also has the benefit of the &lt;a href=&#34;https://aur.archlinux.org/&#34;&gt;Arch User Repository&lt;/a&gt; which makes it easy to package and install software which aren&amp;rsquo;t available in the official repositories. It may be necessary for me to make a package or two in order to get the stuff installed that I would like, so having an easy, reproducible way to do that would be convenient.&lt;/p&gt;
+
+&lt;h3 id=&#34;configuration-management&#34;&gt;Configuration management&lt;/h3&gt;
+
+&lt;p&gt;I plan to use &lt;a href=&#34;https://www.ansible.com/&#34;&gt;Ansible&lt;/a&gt; for the configuration management tool. In my experience it makes it rather easy to write readable recipes for how the system should be configured (it&amp;rsquo;s all YAML files), and since it&amp;rsquo;s an open-source project written in Python I can easily look into the source code in order to see if any potential unexpected behaviour or missing features are easy to fix. I&amp;rsquo;ve already made a few pull requests to the project and wouldn&amp;rsquo;t be afraid to contribute more in case I bump into some edge cases or optimisations that would be made along the way.&lt;/p&gt;
+
+&lt;p&gt;Ansible playbooks can be as simple or advanced as you&amp;rsquo;d like, making them usable for multiple different purposes. As well as configuring the system and installing packages, I also plan to use it for deploying changes to software by using separate playbooks.&lt;/p&gt;
+
+&lt;p&gt;Ansible also has the concept of &lt;a href=&#34;http://docs.ansible.com/ansible/playbooks_vault.html&#34;&gt;Ansible Vault&lt;/a&gt; which would allow me to have a public repository on GitHub with my Ansible configuration that I can refer to, while keeping any passwords or private information encrypted with AES. I think this would be helpful as a learning tool to the reader of the blog post, and would allow me to refer to it from the future blog posts.&lt;/p&gt;
+
+&lt;h3 id=&#34;virtualisation&#34;&gt;Virtualisation&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.docker.com/&#34;&gt;Docker&lt;/a&gt; can have its place on a server, although I currently mostly use it for build tools with lots of dependencies at the moment - like &lt;a href=&#34;https://github.com/assetgraph/assetgraph&#34;&gt;AssetGraph&lt;/a&gt; which I use to optimise the generated HTML files for &lt;a href=&#34;https://github.com/Tenzer/tenzer.dk/blob/master/Makefile#L21&#34;&gt;my website&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;At the moment I don&amp;rsquo;t use Docker for any long running processes but I may start using it more for specific applications, in order to keep them more contained in case they have dependencies that I don&amp;rsquo;t feel like installing system-wide. That could for instance be &lt;a href=&#34;http://pongsocket.com/tweetnest/&#34;&gt;Tweet Nest&lt;/a&gt; which is a PHP application - the only PHP application I run on the current server. It&amp;rsquo;s also a project which is rarely updated any more, making it an even better candidate for a bit of isolation. It&amp;rsquo;s used for archiving all my tweets as I write them and can be seen at &lt;a href=&#34;https://tweets.tenzer.dk/&#34;&gt;tweets.tenzer.dk&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;chatops&#34;&gt;ChatOps&lt;/h3&gt;
+
+&lt;p&gt;I like the idea of setting up a system like &lt;a href=&#34;https://www.mattermost.org/&#34;&gt;Mattermost&lt;/a&gt; on my server, coding some bots for it and using that for automating the slightly more tedious tasks or just as an alternative way of writing scripts for looking up information or doing routine things. I can also have different services on the server publish information to the chat system in case something happens that I would like to be notified about (like recently when &lt;a href=&#34;https://twitter.com/TaphouseWatcher&#34;&gt;Taphouse Watcher&lt;/a&gt; couldn&amp;rsquo;t get beer ratings), or just for scraping information from interesting websites and posting updates into the chat system instead of putting it into my RSS reader.&lt;/p&gt;
+
+&lt;h3 id=&#34;continuous-integration&#34;&gt;Continuous Integration&lt;/h3&gt;
+
+&lt;p&gt;Instead of running scripts and Ansible playbooks ad-hoc on the server in order to make changes over time, I like the concept of executing everything in a controlled way - with proper logging and configuration that can be tweaked over time as needed. A CI server will help me achieve that and is able to be triggered from various places, whether it&amp;rsquo;s a command on a chat server or a commit being pushed to a Git repository.&lt;/p&gt;
+
+&lt;p&gt;A CI server can also be used for doing syntax checking and linting on both program code and Ansible playbooks, helping me save time by checking the work I&amp;rsquo;m doing before I try to execute it on the server. Feedback on how the checks and other deploy jobs are going can easily be pushed to either the chat system or as feedback on GitHub pull requests.&lt;/p&gt;
+
+&lt;p&gt;So far &lt;a href=&#34;https://concourse.ci/&#34;&gt;Concourse&lt;/a&gt; looks like the most interesting option for me, but I&amp;rsquo;ll see how it fares when I get around to set it up.&lt;/p&gt;
+
+&lt;h3 id=&#34;metrics&#34;&gt;Metrics&lt;/h3&gt;
+
+&lt;p&gt;I don&amp;rsquo;t currently have any metrics for the server, neither a graph of the load on the machine, memory usage, number of website hits, disk space remaining or similar. It&amp;rsquo;s mostly a matter of not having had a need for that so far. It&amp;rsquo;s however something I would like to change as I see a weird satisfaction in looking at graphs, even if just to get assured everything is fine, or correlating graphs to figure out exactly what went wrong in case something does go wrong.&lt;/p&gt;
+
+&lt;p&gt;I haven&amp;rsquo;t quite decided on what I&amp;rsquo;ll use for collecting and storing the metrics yet, but I do have a preference and experience with using &lt;a href=&#34;https://github.com/etsy/statsd/blob/master/docs/metric_types.md&#34;&gt;StatsD style metrics&lt;/a&gt; sent to &lt;a href=&#34;http://collectd.org/&#34;&gt;CollectD&lt;/a&gt;, but I have yet to decide if I&amp;rsquo;ll store it in &lt;a href=&#34;https://graphiteapp.org/&#34;&gt;Graphite&lt;/a&gt; or if I&amp;rsquo;ll try to use the new kid on the block: &lt;a href=&#34;https://prometheus.io/&#34;&gt;Prometheus&lt;/a&gt;. &lt;a href=&#34;https://www.influxdata.com/time-series-platform/influxdb/&#34;&gt;InfluxDB&lt;/a&gt; is a bit of a dark horse, I&amp;rsquo;ve previously tried it out with limited success due to performance issues with a ton of metrics, and the recent change to make it more commercial doesn&amp;rsquo;t attract me too much, but it may be outweighed by number of features and ease of deployment. I do however know that I want to use &lt;a href=&#34;http://grafana.org/&#34;&gt;Grafana&lt;/a&gt; as my metrics front-end since I know and love it from past experience.&lt;/p&gt;
+
+&lt;h2 id=&#34;closing-remarks&#34;&gt;Closing remarks&lt;/h2&gt;
+
+&lt;p&gt;That was a bit about my plans. I hope it&amp;rsquo;s something you&amp;rsquo;d like to follow, and I&amp;rsquo;ll make sure to post updates on &lt;a href=&#34;https://twitter.com/Tenzer&#34;&gt;Twitter&lt;/a&gt; whenever new blog posts are up. Do also feel free to reach out to me in case you have any questions, suggestions or comments for this series along the way!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Replacing the icon of a Mac application</title>
@@ -836,134 +896,6 @@ make setup check
 &lt;h2 id=&#34;update&#34;&gt;Update&lt;/h2&gt;
 
 &lt;p&gt;Perhaps the &lt;a href=&#34;https://packages.debian.org/equivs&#34;&gt;equivs&lt;/a&gt; package can be used for these kinds of things.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Configuring the Solaris DHCP server</title>
-      <link>https://tenzer.dk/configuring-the-solaris-dhcp-server/</link>
-      <pubDate>Sat, 23 May 2009 00:00:00 +0000</pubDate>
-      
-      <guid>https://tenzer.dk/configuring-the-solaris-dhcp-server/</guid>
-      <description>&lt;p&gt;As I recently had to configure the Solaris bundled DHCP server on a box, I though that I would write down the steps I took to get the task done, for everybody else to use and also for myself later on.&lt;/p&gt;
-
-&lt;p&gt;I will configure the server with some static entries for specific hosts, and also with a small pool of addresses for random users.&lt;/p&gt;
-
-&lt;p&gt;In order to get the DHCP server installed on OpenSolaris, you have to install the package named &lt;code&gt;SUNWdhcs&lt;/code&gt;. This is done by running:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec pkg install SUNWdhcs
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;After the installation, you should start of by using the &lt;code&gt;dhcpconfig&lt;/code&gt; command to set up the initial configuration directory to hold the settings used by the DHCP server:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec dhcpconfig -D -r SUNWfiles -p /var/dhcp -a 192.168.0.1 -d tenzer.lan -h files -l 86400
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Parameters:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-D&lt;/code&gt; - Specify that we setting up a new instance of the DHCP service.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-r SUNWfiles&lt;/code&gt; - We want a plain text file store. Other options are SUNWbinfiles and SUNWnisplus, but I wont be covering those here.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p /var/dhcp&lt;/code&gt; - An absolute path to where the configuration files should be stored.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-a 192.168.0.1&lt;/code&gt; - The DNS server to use on the LAN.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-d tenzer.lan&lt;/code&gt; - The domain name to use for the network.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-h files&lt;/code&gt; - Specify where the host informations should be stored. Other values are &lt;code&gt;nisplus&lt;/code&gt; and &lt;code&gt;dns&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-l 86400&lt;/code&gt; - The lease time in seconds. 86400 seconds = 24 hours.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;After that you have to create the network we are going to set up. This is done with the following command:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec dhcpconfig -N 192.168.0.0 -m 255.255.255.0 -t 192.168.0.1
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Parameters:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-N 192.168.0.0&lt;/code&gt; - Create a new network with the specified network address.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-m 255.255.255.0&lt;/code&gt; - The network mask to use for the network.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-t 192.168.0.1&lt;/code&gt; - Specifies the default gateway.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;All the above entered network settings are put into macros, which each is a small assembly of configuration options, and which makes it easier to put a group of settings on specific hosts. You can see which macros there is currently created and their settings by running:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;dhtadm -P
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;You will see that there are three macros created. One macro is named after your servers hostname, and contains the settings specified as system wide settings with the first &lt;code&gt;dhcpconfig&lt;/code&gt; command.
-One has the name of the network you just created, and contains those settings entered in the last command.
-The last macro named &lt;code&gt;Locale&lt;/code&gt; simply holds timezone information, with a setting claiming the amount of seconds your local timezone differs from UTC.&lt;/p&gt;
-
-&lt;p&gt;As you can see from the output, the current timeserver specified is set to &lt;code&gt;127.0.0.1&lt;/code&gt; which aren&amp;rsquo;t going to do any good for the DHCP clients, so we are going to correct that to &lt;code&gt;192.168.0.1&lt;/code&gt;, the same address used by our default gateway and DNS server. The change is done like this:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec dhtadm -M -m &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;)&lt;/span&gt; -e &lt;span style=&#34;color: #19177C&#34;&gt;Timeserv&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;192.168.0.1
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Parameters:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-M&lt;/code&gt; - We are going to modify a macro.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-m $(hostname)&lt;/code&gt; - This is the macro we are going to modify. $(hostname) will be replaced with your servers hostname by the shell.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-e Timeserv=192.168.0.1&lt;/code&gt; - The setting we want to change, and what it should be changed to.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Again, you can check that the setting is indeed changed with:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;dhtadm -P
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;We are also going to alter the 192.168.0.0 macro, and set it to include the settings from the macro named after the hostname:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec -M -m 192.168.0.0 -e &lt;span style=&#34;color: #19177C&#34;&gt;Include&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The third command used to configure the DHCP server is &lt;code&gt;pntadm&lt;/code&gt;, which sets up settings for each host on the network. The following command adds a static DHCP entry for a host:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec pntadm -A 192.168.0.2 -c &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Comment&amp;quot;&lt;/span&gt; -f MANUAL -i 01001BFC92BC10 -m 192.168.0.0 -y 192.168.0.0
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Parameters:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-A 192.168.0.2&lt;/code&gt; - Add the IP address 192.168.0.2.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-c &amp;quot;Comment&amp;quot;&lt;/code&gt; - Specify a comment for the entry, for your own convenience.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-f MANUAL&lt;/code&gt; - We set the flag MANUAL in order to only assign this IP address to the MAC address specified.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-i 01001BFC92BC10&lt;/code&gt; - This sets the MAC address (Client_ID) for the host this entry goes for. Should be prepended with &amp;ldquo;01&amp;rdquo; to specify this is ethernet.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-m 192.168.0.0&lt;/code&gt; - This host is going to use the &amp;ldquo;192.168.0.0&amp;rdquo; macro.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-y&lt;/code&gt; - Verify that the macro entered actually exist.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;192.168.0.0&lt;/code&gt; - This is the network the address is assigned to.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The command to check the settings is:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pntadm -P 192.168.0.0
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And now we add an IP address for any host on the network:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec pntadm -A 192.168.0.10 -m 192.168.0.0 -y 192.168.0.0
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The same parameters account as before, but we have just left out a lot more options, since we don&amp;rsquo;t know which host is going to get this address.&lt;/p&gt;
-
-&lt;p&gt;The last thing to do, is to restart the DHCP server, in order for all the changes to take effect:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;pfexec svcadm restart dhcp-server
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And then you are done.&lt;/p&gt;
-
-&lt;p&gt;References: &lt;a href=&#34;http://docs.sun.com/app/docs/doc/816-4554/dhcptm-1?a=view&#34;&gt;docs.sun.com&lt;/a&gt; and man pages.&lt;/p&gt;
 </description>
     </item>
     
