@@ -1,5 +1,7 @@
 .PHONY: serve dist sass clean build optimize
 
+PYGMENTS := $(shell command -v pygmentize 2> /dev/null)
+
 serve: sass
 	@hugo server
 
@@ -15,6 +17,9 @@ clean:
 	@echo '==> Output folder removed'
 
 build:
+ifndef PYGMENTS
+	$(error "Pygments was not found, please make it available in $$PATH")
+endif
 	@hugo --disable404
 	@echo '==> Hugo build done'
 
