@@ -1,6 +1,6 @@
 <a href='{{ .RelPermalink }}'><h1>{{ .Title }}</h1></a>
 <p class='posted-date'>Posted on {{ $.Date.Format "January 2, 2006" }}</p>
-{{ .Summary }}
+<p>{{ .Summary }}</p>
 
 {{ if .Truncated }}
     <p><a href='{{ .RelPermalink }}'>Continue reading &rarr;</a></p>
