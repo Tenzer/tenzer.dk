@@ -1,9 +1,9 @@
 {{ if .IsPage }}
-    {{ $.Scratch.Add "title" (printf "%s - %s" .Title .Site.Title) }}
-    {{ $.Scratch.Add "description" .Summary }}
+    {{ $.Scratch.Set "title" (printf "%s - %s" .Title .Site.Title) }}
+    {{ $.Scratch.Set "description" .Summary }}
 {{ else }}
-    {{ $.Scratch.Add "title" .Site.Title }}
-    {{ $.Scratch.Add "description" "The personal website and blog for Jeppe Toustrup about open source technologies and photography." }}
+    {{ $.Scratch.Set "title" .Site.Title }}
+    {{ $.Scratch.Set "description" "The personal website and blog for Jeppe Toustrup about open source technologies and photography." }}
 {{ end }}
 
 <!doctype html>
