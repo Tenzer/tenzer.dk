@@ -11,7 +11,7 @@ location / {
 }
 {{< /highlight >}}
 
-Test it out and - barring the firewall/security group configuration is set up right - it should work just fine. Some hours later you may however find the service is no longer working, even though no changes has been made. Calling the ELB endpoint directly works just fine, but calling it through Nginx just times out.
+Test it out and - assuming the firewall/security group configuration is set up right - it should work just fine. Some hours later you may however find the service is no longer working, even though no changes has been made. Calling the ELB endpoint directly works just fine, but calling it through Nginx just times out.
 
 
 ELB endpoint primer

@@ -231,7 +231,7 @@ digest &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Test it out and - barring the firewall/security group configuration is set up right - it should work just fine. Some hours later you may however find the service is no longer working, even though no changes has been made. Calling the ELB endpoint directly works just fine, but calling it through Nginx just times out.&lt;/p&gt;
+&lt;p&gt;Test it out and - assuming the firewall/security group configuration is set up right - it should work just fine. Some hours later you may however find the service is no longer working, even though no changes has been made. Calling the ELB endpoint directly works just fine, but calling it through Nginx just times out.&lt;/p&gt;
 
 &lt;h2 id=&#34;elb-endpoint-primer&#34;&gt;ELB endpoint primer&lt;/h2&gt;
 
