@@ -2,6 +2,7 @@ baseurl = "https://tenzer.dk/"
 title = "Tenzer.dk"
 publishdir = "out/unoptimized"
 pygmentsstyle = "default"
+disableKinds = ["404"]
 
 [permalinks]
 post = "/:title/"

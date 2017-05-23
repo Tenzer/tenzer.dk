@@ -20,7 +20,7 @@ build:
 ifndef PYGMENTS
 	$(error "Pygments was not found, please make it available in $$PATH")
 endif
-	@hugo --disable404
+	@hugo
 	@echo '==> Hugo build done'
 
 optimize:
