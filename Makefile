@@ -1,29 +1,32 @@
-.PHONY: serve dist sass clean build optimize
+.PHONY: help serve dist sass clean build optimize
 
 PYGMENTS := $(shell command -v pygmentize 2> /dev/null)
 
-serve: sass
+help:  ## Show help output
+	# Tip from https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
+
+serve: sass  ## Serve the site directly on http://localhost:1313/
 	@hugo server
 
-.PHONY: dist
-dist: sass clean build optimize
+dist: sass clean build optimize  ## Build the final, optimized site
 
-sass:
+sass:  ## Convert SASS style sheet to CSS
 	@sassc --style compact static/css/style.scss static/css/style.css
 	@echo '==> SASS build done'
 
-clean:
+clean:  ## Clean output folder
 	@rm -rf out/
 	@echo '==> Output folder removed'
 
-build:
+build:  ## Generate the site
 ifndef PYGMENTS
 	$(error "Pygments was not found, please make it available in $$PATH")
 endif
 	@hugo
 	@echo '==> Hugo build done'
 
-optimize:
+optimize:  ## Optimize site with AssetGraph
 	@docker run \
 		--interactive \
 		--tty \
