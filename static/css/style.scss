@@ -98,8 +98,8 @@ h1 {
 }
 
 pre {
-    background-color: lighten($light-color, 3%);
     border: 1px dashed darken($light-color, 10%);
+    line-height: 1.25em;
     max-width: $max-page-width;
     overflow: auto;
     padding: 5px 10px;

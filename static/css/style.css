@@ -30,7 +30,7 @@ nav span.disabled { color: #8c97a1; }
 
 h1 { line-height: 1; margin-bottom: 0.5rem; }
 
-pre { background-color: #f5f7f7; border: 1px dashed #cfd9db; max-width: 700px; overflow: auto; padding: 5px 10px; }
+pre { border: 1px dashed #cfd9db; line-height: 1.25em; max-width: 700px; overflow: auto; padding: 5px 10px; }
 
 pre code { background-color: inherit; border: none; padding: 0; }
 

@@ -1,7 +1,5 @@
 .PHONY: help serve dist sass clean build optimize
 
-PYGMENTS := $(shell command -v pygmentize 2> /dev/null)
-
 help:  ## Show help output
 	# Tip from https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
@@ -20,9 +18,6 @@ clean:  ## Clean output folder
 	@echo '==> Output folder removed'
 
 build:  ## Generate the site
-ifndef PYGMENTS
-	$(error "Pygments was not found, please make it available in $$PATH")
-endif
 	@hugo
 	@echo '==> Hugo build done'
 
