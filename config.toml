@@ -5,3 +5,5 @@ disableKinds = ["404"]
 
 [permalinks]
 post = "/:title/"
+
+[taxonomies]

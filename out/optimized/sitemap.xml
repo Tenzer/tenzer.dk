@@ -103,18 +103,8 @@
   </url>
   
   <url>
-    <loc>https://tenzer.dk/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://tenzer.dk/post/</loc>
     <lastmod>2016-11-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://tenzer.dk/tags/</loc>
     <priority>0</priority>
   </url>
   
