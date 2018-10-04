@@ -132,4 +132,4 @@ You will be asked what password you would like the user to have, and then you sh
 I hope you found this guide useful, and in case you have any comments to this guide or just want to get in touch with me, then find my on Twitter as [@Tenzer](https://twitter.com/Tenzer).
 
 **Update!**  
-I've made [another guide]({{< relref "post/guide-docker-registry-frontend.md" >}}) on how to set up a frontend for your own registry, making it easier to navigate and manage.
+I've made [another guide]({{< relref "/post/guide-docker-registry-frontend.md" >}}) on how to set up a frontend for your own registry, making it easier to navigate and manage.

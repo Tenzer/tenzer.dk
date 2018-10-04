@@ -3,13 +3,13 @@ date = "2015-01-17"
 title = "Guide: Docker Registry Frontend"
 +++
 
-If you have your own [private Docker registry]({{< relref "post/guide-private-docker-registry.md" >}}) you might be wanting some kind of frontend for it, as `docker search [...]` can only get you so far in regards to getting an overview of what the registry contains. Fortunately all the information you might want about the registry contents can be aquired through the [REST API](https://docs.docker.com/reference/api/registry_api/), making it possible to present the data neatly on a website.
+If you have your own [private Docker registry]({{< relref "/post/guide-private-docker-registry.md" >}}) you might be wanting some kind of frontend for it, as `docker search [...]` can only get you so far in regards to getting an overview of what the registry contains. Fortunately all the information you might want about the registry contents can be aquired through the [REST API](https://docs.docker.com/reference/api/registry_api/), making it possible to present the data neatly on a website.
 
 Konrad Kleine has made the [docker-registry-frontend](https://github.com/kwk/docker-registry-frontend) project to do just that. It's a client-only AngularJS based web app which calls the Docker registry API directly and serves it up in a neat web interface ([screenshots here](https://github.com/kwk/docker-registry-frontend/wiki/Features)).
 
 While he does provide a [Dockerfile](https://github.com/kwk/docker-registry-frontend/blob/master/Dockerfile) which builds and run the interface, I would rather just serve the files via the Nginx server which already run in front of the registry.
 
-I am going to presume you have set up a private registry like described in [my guide]({{< relref "post/guide-private-docker-registry.md" >}}). First you have to install the dependencies we need; Git for getting the code and Node.js + NPM for building it. We also make a symlink to the Node.js executable so it can be called with just `node` as some NPM packages' install scripts rely on that:
+I am going to presume you have set up a private registry like described in [my guide]({{< relref "/post/guide-private-docker-registry.md" >}}). First you have to install the dependencies we need; Git for getting the code and Node.js + NPM for building it. We also make a symlink to the Node.js executable so it can be called with just `node` as some NPM packages' install scripts rely on that:
 
 {{< highlight shell >}}
 sudo apt-get install git nodejs npm
