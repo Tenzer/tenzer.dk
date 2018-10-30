@@ -1,6 +1,7 @@
 +++
 date = "2016-11-20"
 title = "Making a server - The plan"
+aliases = ["/making-a-server---the-plan/"]
 +++
 
 I currently have a virtual server running at [Hetzner](https://www.hetzner.de/gb/), it's used for hosting this website plus a few other projects of mine. I've been contemplating rebuilding it from scratch, and think it could be good to blog about and to give you some tips in case you feel inspired to do the same.

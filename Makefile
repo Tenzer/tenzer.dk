@@ -30,6 +30,9 @@ optimize:  ## Optimize site with AssetGraph
 		assetgraph/assetgraph-builder \
 		--root /site/unoptimized \
 		--outroot /site/optimized \
+		--stoponwarning \
+		--subresourceintegrity \
+		--optimizeimages \
 		/site/unoptimized/images/logo.png \
 		/site/unoptimized/index.html \
 		/site/unoptimized/index.xml \

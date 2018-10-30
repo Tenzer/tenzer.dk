@@ -12,10 +12,10 @@
     
     <item>
       <title>Making a server - The plan</title>
-      <link>https://tenzer.dk/making-a-server---the-plan/</link>
+      <link>https://tenzer.dk/making-a-server-the-plan/</link>
       <pubDate>Sun, 20 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://tenzer.dk/making-a-server---the-plan/</guid>
+      <guid>https://tenzer.dk/making-a-server-the-plan/</guid>
       <description>I currently have a virtual server running at Hetzner, it&amp;rsquo;s used for hosting this website plus a few other projects of mine. I&amp;rsquo;ve been contemplating rebuilding it from scratch, and think it could be good to blog about and to give you some tips in case you feel inspired to do the same.
 The current server has been ad-hoc configured over the years, I instead plan to make the new server a lot more structured and instead make use of configuration management for setting it up, a continuous integration server for checking and executing the configuration, &amp;ldquo;ChatOps&amp;rdquo; for day-to-day system administration and tools, metrics for the system and services, etc.</description>
     </item>
