@@ -41,3 +41,6 @@ optimize:  ## Optimize site with AssetGraph
 		/site/unoptimized/robots.txt \
 		/site/unoptimized/sitemap.xml
 	@echo '==> AssetGraph build done'
+
+deploy:  ## Deploy the site to Google Cloud Storage
+	@gsutil -m rsync -rJ out/optimized/ gs://tenzer.dk/
