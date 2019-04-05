@@ -36,6 +36,7 @@ optimize:  ## Optimize site with AssetGraph
 		/site/unoptimized/images/logo.png \
 		/site/unoptimized/index.html \
 		/site/unoptimized/index.xml \
+		/site/unoptimized/404.html \
 		/site/unoptimized/keybase.txt \
 		/site/unoptimized/robots.txt \
 		/site/unoptimized/sitemap.xml
