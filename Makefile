@@ -33,6 +33,7 @@ optimize:  ## Optimize site with AssetGraph
 		--stoponwarning \
 		--subresourceintegrity \
 		--optimizeimages \
+		--inlinehtmlstyle false \
 		/site/unoptimized/images/logo.png \
 		/site/unoptimized/index.html \
 		/site/unoptimized/index.xml \
