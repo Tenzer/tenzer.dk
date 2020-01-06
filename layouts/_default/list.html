@@ -1,6 +1,6 @@
 {{ partial "header.html" . }}
 
-{{ range (.Paginate .Data.Pages).Pages }}
+{{ range (.Paginate .Site.RegularPages).Pages }}
     {{ .Render "li" }}
 {{ end }}
 

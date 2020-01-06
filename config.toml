@@ -7,3 +7,8 @@ disableKinds = ["404"]
 post = "/:title/"
 
 [taxonomies]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      typographer = false

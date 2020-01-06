@@ -116,9 +116,9 @@ server {
 }
 {{< /highlight >}}
 
-{{% admonition attention Attention %}}
+{{< admonition attention Attention >}}
 Docker expects the registry to use HTTPS, but I won't go into how that is setup in Nginx as there are plenty of guides available on how to configure HTTPS already.
-{{% /admonition %}}
+{{< /admonition >}}
 
 Reload the Nginx configuration, and then create a user in the auth file with `htpasswd`:
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tenzer.dk</title>
@@ -16,8 +16,8 @@
       <pubDate>Sun, 20 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/making-a-server-the-plan/</guid>
-      <description>I currently have a virtual server running at Hetzner, it&amp;rsquo;s used for hosting this website plus a few other projects of mine. I&amp;rsquo;ve been contemplating rebuilding it from scratch, and think it could be good to blog about and to give you some tips in case you feel inspired to do the same.
-The current server has been ad-hoc configured over the years, I instead plan to make the new server a lot more structured and instead make use of configuration management for setting it up, a continuous integration server for checking and executing the configuration, &amp;ldquo;ChatOps&amp;rdquo; for day-to-day system administration and tools, metrics for the system and services, etc.</description>
+      <description>I currently have a virtual server running at Hetzner, it&#39;s used for hosting this website plus a few other projects of mine. I&#39;ve been contemplating rebuilding it from scratch, and think it could be good to blog about and to give you some tips in case you feel inspired to do the same.
+The current server has been ad-hoc configured over the years, I instead plan to make the new server a lot more structured and instead make use of configuration management for setting it up, a continuous integration server for checking and executing the configuration, &amp;quot;ChatOps&amp;quot; for day-to-day system administration and tools, metrics for the system and services, etc.</description>
     </item>
     
     <item>
@@ -36,7 +36,7 @@ There is one problem with smcFanControl though, the menu bar entry for the progr
       <pubDate>Wed, 23 Sep 2015 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/generating-subresource-integrity-checksums/</guid>
-      <description>The GitHub Engineering blog recently had a blog post on how they have added Subresource Integrity (SRI) tags on their third party assets. Long story short, this is integrity attribute you add to your &amp;lt;script&amp;gt; or &amp;lt;link rel=&amp;quot;stylesheet&amp;quot;&amp;gt; tags which point to external (ie. not inlined) assets. Supporting browsers will then check the checksum in the attribute against the file it has downloaded before it parses the file. This is to make sure the file hasn&amp;rsquo;t been tampered with and to avoid the browser loading malicious files because some third party hoster got a security problem.</description>
+      <description>The GitHub Engineering blog recently had a blog post on how they have added Subresource Integrity (SRI) tags on their third party assets. Long story short, this is integrity attribute you add to your &amp;lt;script&amp;gt; or &amp;lt;link rel=&amp;quot;stylesheet&amp;quot;&amp;gt; tags which point to external (ie. not inlined) assets. Supporting browsers will then check the checksum in the attribute against the file it has downloaded before it parses the file. This is to make sure the file hasn&#39;t been tampered with and to avoid the browser loading malicious files because some third party hoster got a security problem.</description>
     </item>
     
     <item>
@@ -45,7 +45,7 @@ There is one problem with smcFanControl though, the menu bar entry for the progr
       <pubDate>Sun, 26 Jul 2015 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/nginx-with-dynamic-upstreams/</guid>
-      <description>I recently made a setup at work where I had a Nginx server facing the user, which would forward requests to a service running behind an AWS Elastic Load Balancer (aka. ELB). That in itself doesn&amp;rsquo;t sound like a difficult task, you just find the hostname for the ELB and point Nginx at it with a proxy_pass statement like this, right?
+      <description>I recently made a setup at work where I had a Nginx server facing the user, which would forward requests to a service running behind an AWS Elastic Load Balancer (aka. ELB). That in itself doesn&#39;t sound like a difficult task, you just find the hostname for the ELB and point Nginx at it with a proxy_pass statement like this, right?
 location / { proxy_pass http://service-1234567890.us-east-1.elb.amazonaws.com; } Test it out and - assuming the firewall/security group configuration is set up right - it should work just fine.</description>
     </item>
     
@@ -75,7 +75,7 @@ Konrad Kleine has made the docker-registry-frontend project to do just that.</de
       <pubDate>Wed, 14 Jan 2015 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/guide-private-docker-registry/</guid>
-      <description>I got to play around with Docker lately at work, and for that we needed a private place to store Docker images. Since the other guides I found either were unnecessarily advanced, or hosted the registry inside a Docker instance, instead of making use of our existing server setup, I&amp;rsquo;ve gone ahead and made a guide for how I set it up.
+      <description>I got to play around with Docker lately at work, and for that we needed a private place to store Docker images. Since the other guides I found either were unnecessarily advanced, or hosted the registry inside a Docker instance, instead of making use of our existing server setup, I&#39;ve gone ahead and made a guide for how I set it up.
 This guide shows the steps to take on an Ubuntu machine, but it should be easy to apply to other operating systems.</description>
     </item>
     
@@ -85,8 +85,8 @@ This guide shows the steps to take on an Ubuntu machine, but it should be easy t
       <pubDate>Fri, 26 Dec 2014 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/new-website/</guid>
-      <description>It has been in the making for some time but now it&amp;rsquo;s finally out. I&amp;rsquo;ve made a new design for my website and in the process also switched it from being based on Wordpress to now being a static site.
-Back in July my colleague Esben started work on his own static site generator, Beetle, and I got interested in the project shortly after. Within a month I made the first pull request to Beetle while also acting as a sparring partner to Esben&amp;rsquo;s development work.</description>
+      <description>It has been in the making for some time but now it&#39;s finally out. I&#39;ve made a new design for my website and in the process also switched it from being based on Wordpress to now being a static site.
+Back in July my colleague Esben started work on his own static site generator, Beetle, and I got interested in the project shortly after. Within a month I made the first pull request to Beetle while also acting as a sparring partner to Esben&#39;s development work.</description>
     </item>
     
     <item>
@@ -95,7 +95,7 @@ Back in July my colleague Esben started work on his own static site generator, B
       <pubDate>Fri, 23 Nov 2012 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/setting-up-tweet-nest-in-nginx/</guid>
-      <description>Today I&amp;rsquo;ve set up Tweet Nest at tweets.tenzer.dk. Tweet Nest is a simple application that archives all your tweets, and make it easy to search for old tweets you&amp;rsquo;ve written that you might want to find again. Tweet Nest comes by default with .htaccess files containing an Apache mod_rewrite specific configuration, but since I&amp;rsquo;m using Nginx that configuration won&amp;rsquo;t work for me.
+      <description>Today I&#39;ve set up Tweet Nest at tweets.tenzer.dk. Tweet Nest is a simple application that archives all your tweets, and make it easy to search for old tweets you&#39;ve written that you might want to find again. Tweet Nest comes by default with .htaccess files containing an Apache mod_rewrite specific configuration, but since I&#39;m using Nginx that configuration won&#39;t work for me.
 The mod_rewrite rules are limited to rules for handling requests to /sort, /favorites, /search and pages to show tweets for a specific month and day.</description>
     </item>
     
@@ -105,7 +105,7 @@ The mod_rewrite rules are limited to rules for handling requests to /sort, /favo
       <pubDate>Sat, 08 Oct 2011 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/football-pictures-and-video/</guid>
-      <description>A few weeks ago I watched the Copenhagen Towers&amp;rsquo; (the American football team I play for) U19 team play the semi-finals in the national championships, and I did of course take pictures of it. They can all be found in the Flickr gallery for the game.
+      <description>A few weeks ago I watched the Copenhagen Towers&#39; (the American football team I play for) U19 team play the semi-finals in the national championships, and I did of course take pictures of it. They can all be found in the Flickr gallery for the game.
 Tuesday this week Jens Rørbye - the media manager for Copenhagen Towers - contacted me and asked if I could help out with an interview of the teams American import quarterback player, JR Artozqui.</description>
     </item>
     
@@ -115,7 +115,7 @@ Tuesday this week Jens Rørbye - the media manager for Copenhagen Towers - conta
       <pubDate>Wed, 31 Aug 2011 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/concert-photography-is-fun/</guid>
-      <description>In an attempt on getting a bit of activity back here on my blog, I thought I might as well update a bit on what I&amp;rsquo;ve been doing lately.
+      <description>In an attempt on getting a bit of activity back here on my blog, I thought I might as well update a bit on what I&#39;ve been doing lately.
 A few weeks ago I went to the concert venue Gimle in Roskilde in order to watch some concerts, primarily with the Danish live drum and bass band F.U.K.T and electronic artist Rangleklods. I had listened to both artists a fair bit prior to the concert, and the concert was free so it was really a no brainer to go.</description>
     </item>
     
@@ -147,7 +147,7 @@ First we start of with the installation of some packages, including sunstudio si
       
       <guid>https://tenzer.dk/updating-an-opensolaris-zone/</guid>
       <description>This is just a quick guide for people who need to update an OpenSolaris zone. First off, you need to shutdown the zone. This can either by done by using init 5 or shutdown inside the zone, or by running any of the two commands with zlogin from the global zone. A final not recommended possibility is to run zoneadm -z &amp;lt;zonename&amp;gt; halt from the global zone.
-After the zone is stopped, you will have to set the zone state to &amp;ldquo;ready&amp;rdquo;, in order for the file systems to be mounted:</description>
+After the zone is stopped, you will have to set the zone state to &amp;quot;ready&amp;quot;, in order for the file systems to be mounted:</description>
     </item>
     
     <item>
@@ -156,7 +156,7 @@ After the zone is stopped, you will have to set the zone state to &amp;ldquo;rea
       <pubDate>Tue, 28 Jul 2009 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/some-thoughts-about-package-dependencies/</guid>
-      <description>Last night I installed SqueezeCenter (the server software used with Squeezebox&amp;rsquo;s) on my home server, since I want to use it together with SqueezeSlave running on my server. That way I can play music from my server while I have a webinterface to control it from all computers on my network.
+      <description>Last night I installed SqueezeCenter (the server software used with Squeezebox&#39;s) on my home server, since I want to use it together with SqueezeSlave running on my server. That way I can play music from my server while I have a webinterface to control it from all computers on my network.
 For the installation of SqueezeCenter I downloaded the .deb package, since it was going to be installed on my home Ubuntu server.</description>
     </item>
     
@@ -177,7 +177,7 @@ In order to get the DHCP server installed on OpenSolaris, you have to install th
       <pubDate>Thu, 26 Feb 2009 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/zenphoto-sitemap-1.0.2/</guid>
-      <description>There&amp;rsquo;s a new version of my Zenphoto Sitemap available, which only includes one fix this time.
+      <description>There&#39;s a new version of my Zenphoto Sitemap available, which only includes one fix this time.
 The change makes the plugin handle non-alphanumeric characters correctly, such as whitespaces, parentheses, brackets, international letters, etc. All those characters are now URL encoded when the sitemap is generated.
 As always you can get the new version at the Zenphoto Sitemap page.</description>
     </item>
@@ -189,7 +189,7 @@ As always you can get the new version at the Zenphoto Sitemap page.</description
       
       <guid>https://tenzer.dk/zenphoto-sitemap-1.0.1/</guid>
       <description>I have updated my Zenphoto Sitemap plugin with two minor fixes.
-The first change is that there won&amp;rsquo;t be specified any priorities in the sitemap at all, since the priorities only matter against other URLs in the same exact sitemap (ie. not site-wide). The plugin will have to be rewritten to have all URLs in the same sitemap in order to make use of priorities. As I haven&amp;rsquo;t experienced any need to specify the priority, it is simply left out and then the URLs are assigned the default priority (0.</description>
+The first change is that there won&#39;t be specified any priorities in the sitemap at all, since the priorities only matter against other URLs in the same exact sitemap (ie. not site-wide). The plugin will have to be rewritten to have all URLs in the same sitemap in order to make use of priorities. As I haven&#39;t experienced any need to specify the priority, it is simply left out and then the URLs are assigned the default priority (0.</description>
     </item>
     
     <item>
@@ -198,7 +198,7 @@ The first change is that there won&amp;rsquo;t be specified any priorities in th
       <pubDate>Wed, 26 Nov 2008 00:00:00 +0000</pubDate>
       
       <guid>https://tenzer.dk/zenphoto-plugin-zenphoto-sitemap/</guid>
-      <description>I have been coding a bit the last couple of days on a plugin for the gallery system Zenphoto. I wasn&amp;rsquo;t very happy with how the images from my gallery where indexed, and I couldn&amp;rsquo;t find any other decent coded sitemap generators for Zenphoto, so I decided to create one myself.
+      <description>I have been coding a bit the last couple of days on a plugin for the gallery system Zenphoto. I wasn&#39;t very happy with how the images from my gallery where indexed, and I couldn&#39;t find any other decent coded sitemap generators for Zenphoto, so I decided to create one myself.
 The result is a one-file plugin for Zenphoto, which is being activated by putting ?sitemap in the URL for your Zenphoto gallery.</description>
     </item>
     
