@@ -1,7 +1,7 @@
 {{ partial "header.html" . }}
 
 <a href='{{ .RelPermalink }}'><h1>{{ .Title }}</h1></a>
-{{ with $.Date }}<p class='posted-date'>Posted on {{ .Format "January 2, 2006" }}</p>{{ end }}
+{{ with $.Date }}<p class='posted-date'>Posted on {{ .Format "January 2, 2006" }}{{ end }}. Reading time: {{ .ReadingTime }} minutes</p>
 {{ .Content }}
 
 {{ partial "footer.html" . }}
