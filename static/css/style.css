@@ -60,9 +60,9 @@ ul li { list-style-type: circle; }
 
 [data-expounded] { display: none; }
 
-[data-expounded].expounded-appear { display: initial; animation: expoundedFadeIn 1s; }
+.expounded-appear[data-expounded] { display: initial; animation: expoundedFadeIn 1s; }
 
-[data-expounded].expounded-disappear { display: initial; animation: expoundedFadeOut 1s; }
+.expounded-disappear[data-expounded] { display: initial; animation: expoundedFadeOut 1s; }
 
 footer { font-size: 15px; margin: auto; max-width: 700px; text-align: center; }
 
