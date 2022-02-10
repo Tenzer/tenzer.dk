@@ -1,65 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://tenzer.dk/post/</loc>
     <lastmod>2016-04-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/replacing-the-icon-of-a-mac-application/</loc>
     <lastmod>2016-04-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/</loc>
     <lastmod>2016-04-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/generating-subresource-integrity-checksums/</loc>
     <lastmod>2015-09-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/nginx-with-dynamic-upstreams/</loc>
     <lastmod>2015-07-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/python-output-format/</loc>
     <lastmod>2015-03-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/guide-docker-registry-frontend/</loc>
     <lastmod>2015-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/guide-private-docker-registry/</loc>
     <lastmod>2015-01-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/new-website/</loc>
     <lastmod>2014-12-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/some-thoughts-about-package-dependencies/</loc>
     <lastmod>2009-07-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/zenphoto-plugin-zenphoto-sitemap/</loc>
     <lastmod>2008-11-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://tenzer.dk/macro-module-for-apache/</loc>
     <lastmod>2007-10-07T00:00:00+00:00</lastmod>
   </url>
-  
 </urlset>
