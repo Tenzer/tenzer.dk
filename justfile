@@ -45,8 +45,6 @@ optimize:
 # Build the final, optimized site
 dist: sass clean build optimize
 
-# Deploy the site to Google Cloud Storage
+# Deploy the site to Cloudflare
 deploy:
-    @gsutil -m rsync -rJ out/optimized/ gs://tenzer.dk/
-    @echo "Purging Cloudflare's cache"
-    @flarectl zone purge --zone tenzer.dk --everything
+    @wrangler publish

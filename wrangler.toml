@@ -1,0 +1,8 @@
+name = "tenzer-dk"
+type = "webpack"
+route = "tenzer.dk/*"
+compatibility_date = "2021-11-10"
+
+[site]
+bucket = "out/optimized"
+entry-point = "workers-site"
