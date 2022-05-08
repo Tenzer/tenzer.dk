@@ -36,6 +36,7 @@ async function handleEvent(event) {
     } else {
       response.headers.set("Content-Security-Policy", "default-src 'none'; base-uri 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';");
       response.headers.set("Feature-Policy", "none");
+      response.headers.set("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), interest-cohort=(), magnetometer=(), microphone=(), payment=(), usb=()");
       response.headers.set("Referrer-Policy", "no-referrer-when-downgrade");
       response.headers.set("X-Content-Type-Options", "nosniff");
       response.headers.set("X-Frame-Options", "DENY");
