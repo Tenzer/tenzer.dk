@@ -42,6 +42,11 @@ async function handleEvent(event) {
       response.headers.set("X-XSS-Protection", "1; mode=block");
     }
 
+    // Set correct content type for RSS feed
+    if (url.pathname === "/index.xml") {
+      response.headers.set("Content-Type", "application/rss+xml");
+    }
+
     return response;
 
   } catch (e) {
