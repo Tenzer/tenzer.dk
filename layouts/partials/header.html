@@ -6,6 +6,8 @@
     {{ $.Scratch.Set "description" "The personal website and blog for Jeppe Fihl-Pearson about open source technologies and photography." }}
 {{ end }}
 
+{{ $style := resources.Get "style.scss" | resources.ToCSS (dict "outputStyle" "compressed") | resources.Fingerprint }}
+
 <!doctype html>
 <html lang='en'>
     <head prefix='og: http://ogp.me/ns#'>
@@ -14,7 +16,7 @@
         <title>{{ $.Scratch.Get "title" }}</title>
         <meta name='description' content='The personal website and blog for Jeppe Fihl-Pearson about open source technologies and photography.'>
         <meta name='generator' content='Hugo {{ hugo.Version }}'>
-        <link rel='stylesheet' href='/css/style.css'>
+        <link rel='stylesheet' href='{{ $style.Permalink | safeCSS }}' integrity='{{ $style.Data.Integrity }}'>
         <link rel='logo' href='/images/favicon.svg' type='image/svg+xml'>
         <link rel='icon' href='/images/favicon.svg' sizes='any' type='image/svg+xml'>
         <link rel='icon' href='/images/favicon.png' sizes='128x128' type='image/png'>
