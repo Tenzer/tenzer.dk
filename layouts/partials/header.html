@@ -3,10 +3,14 @@
     {{ $.Scratch.Set "description" .Summary }}
 {{ else }}
     {{ $.Scratch.Set "title" .Site.Title }}
-    {{ $.Scratch.Set "description" "The personal website and blog for Jeppe Fihl-Pearson about open source technologies and photography." }}
+    {{ $.Scratch.Set "description" "The personal website and blog for Jeppe Fihl-Pearson about open source technologies and other hobbies." }}
 {{ end }}
 
-{{ $style := resources.Get "style.scss" | resources.ToCSS (dict "outputStyle" "compressed") | resources.Fingerprint }}
+{{ $style := resources.Get "static/style.scss" | toCSS (dict "outputStyle" "compressed") | fingerprint }}
+{{ $faviconSvg := resources.Get "static/favicon.svg" | fingerprint }}
+{{ $faviconPng := resources.Get "static/favicon.png" | fingerprint }}
+{{ $logoPng := resources.Get "static/logo.png" | fingerprint }}
+{{ $tenzerDkPng := resources.Get "static/tenzerdk.png" | fingerprint }}
 
 <!doctype html>
 <html lang='en'>
@@ -14,12 +18,12 @@
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <title>{{ $.Scratch.Get "title" }}</title>
-        <meta name='description' content='The personal website and blog for Jeppe Fihl-Pearson about open source technologies and photography.'>
+        <meta name='description' content='The personal website and blog for Jeppe Fihl-Pearson about open source technologies and other hobbies.'>
         <meta name='generator' content='Hugo {{ hugo.Version }}'>
-        <link rel='stylesheet' href='{{ $style.Permalink | safeCSS }}' integrity='{{ $style.Data.Integrity }}'>
-        <link rel='logo' href='/images/favicon.svg' type='image/svg+xml'>
-        <link rel='icon' href='/images/favicon.svg' sizes='any' type='image/svg+xml'>
-        <link rel='icon' href='/images/favicon.png' sizes='128x128' type='image/png'>
+        <link rel='stylesheet' href='{{ $style.RelPermalink | safeCSS }}' integrity='{{ $style.Data.Integrity }}'>
+        <link rel='logo' href='{{ $faviconSvg.RelPermalink }}' type='image/svg+xml'>
+        <link rel='icon' href='{{ $faviconSvg.RelPermalink }}' sizes='any' type='image/svg+xml'>
+        <link rel='icon' href='{{ $faviconPng.RelPermalink }}' sizes='128x128' type='image/png'>
         <link rel='icon' href='/favicon.ico' sizes='16x16 32x32 48x48 64x64' type='image/x-icon'>
         <link rel='alternate' href='{{ .Site.RSSLink }}' type='application/rss+xml' title='{{ .Site.Title }}'>
         <meta name='theme-color' content='#2C3E50'>
@@ -28,18 +32,18 @@
         <meta property='og:site_name' content='{{ .Site.Title }}'>
         <meta property='og:title' content='{{ $.Scratch.Get "title" }}'>
         <meta property='og:description' content='{{ $.Scratch.Get "description" }}'>
-        <meta property='og:image' content='{{ .Site.BaseURL }}images/logo.png'>
+        <meta property='og:image' content='{{ $logoPng.Permalink }}'>
         <meta name='twitter:card' content='summary'>
         <meta name='twitter:site' content='@Tenzer'>
         <meta name='twitter:title' content='{{ $.Scratch.Get "title" }}'>
         <meta name='twitter:description' content='{{ $.Scratch.Get "description" }}'>
-        <meta name='twitter:image' content='{{ .Site.BaseURL }}images/logo.png'>
+        <meta name='twitter:image' content='{{ $logoPng.Permalink }}'>
     </head>
     <body>
         <header>
             <div class='header-container'>
                 <a href='/'>
-                    <img id='logo' src='/images/tenzerdk.png' alt='Tenzer.dk logo'>
+                    <img id='logo' src='{{ $tenzerDkPng.RelPermalink }}' alt='Tenzer.dk logo'>
                 </a>
             </div>
         </header>

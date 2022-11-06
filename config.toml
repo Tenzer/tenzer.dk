@@ -1,6 +1,5 @@
 baseurl = "https://tenzer.dk/"
 title = "Tenzer.dk"
-publishdir = "out/unoptimized"
 disableKinds = ["404"]
 
 [permalinks]
@@ -12,6 +11,3 @@ post = "/:title/"
   [markup.goldmark]
     [markup.goldmark.extensions]
       typographer = false
-
-[minify]
-  minifyOutput = true

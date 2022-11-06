@@ -4,5 +4,5 @@ route = "tenzer.dk/*"
 compatibility_date = "2021-11-10"
 
 [site]
-bucket = "out/optimized"
+bucket = "public"
 entry-point = "workers-site"
