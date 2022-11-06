@@ -1,3 +1,0 @@
-Sitemap: https://tenzer.dk/sitemap.xml
-User-agent: *
-Disallow:
