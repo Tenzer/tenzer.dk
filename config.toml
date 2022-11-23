@@ -1,6 +1,6 @@
 baseurl = "https://tenzer.dk/"
 title = "Tenzer.dk"
-disableKinds = ["404"]
+disableKinds = ["404", "section"]
 
 [permalinks]
 post = "/:title/"
