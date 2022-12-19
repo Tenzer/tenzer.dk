@@ -1,0 +1,25 @@
+{
+    "subject":"acct:Tenzer@s.waq.dk",
+    "aliases":
+    [
+        "https://s.waq.dk/@Tenzer",
+        "https://s.waq.dk/users/Tenzer"
+    ],
+    "links":
+    [
+        {
+            "rel":"http://webfinger.net/rel/profile-page",
+            "type":"text/html",
+            "href":"https://s.waq.dk/@Tenzer"
+        },
+        {
+            "rel":"self",
+            "type":"application/activity+json",
+            "href":"https://s.waq.dk/users/Tenzer"
+        },
+        {
+            "rel":"http://ostatus.org/schema/1.0/subscribe",
+            "template":"https://s.waq.dk/authorize_interaction?uri={uri}"
+        }
+    ]
+}
