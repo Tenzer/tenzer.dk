@@ -1,8 +1,7 @@
 name = "tenzer-dk"
-type = "webpack"
 route = "tenzer.dk/*"
 compatibility_date = "2021-11-10"
+main = "workers-site/index.js"
 
 [site]
 bucket = "public"
-entry-point = "workers-site"
