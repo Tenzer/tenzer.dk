@@ -25,7 +25,9 @@
         <link rel='icon' href='{{ $faviconSvg.RelPermalink }}' sizes='any' type='image/svg+xml'>
         <link rel='icon' href='{{ $faviconPng.RelPermalink }}' sizes='128x128' type='image/png'>
         <link rel='icon' href='/favicon.ico' sizes='16x16 32x32 48x48 64x64' type='image/x-icon'>
-        <link rel='alternate' href='{{ .Site.RSSLink }}' type='application/rss+xml' title='{{ .Site.Title }}'>
+        {{ with .OutputFormats.Get "rss" -}}
+            {{ printf `<link rel=%q href=%q type=%q title=%q>` .Rel .Permalink .MediaType.Type site.Title | safeHTML }}
+        {{ end }}
         <meta name='theme-color' content='#2C3E50'>
         <meta property='og:type' content='website'>
         <meta property='og:url' content='{{ .Permalink }}'>
