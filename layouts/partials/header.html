@@ -28,6 +28,7 @@
         {{ with .OutputFormats.Get "rss" -}}
             {{ printf `<link rel=%q href=%q type=%q title=%q>` .Rel .Permalink .MediaType.Type site.Title | safeHTML }}
         {{ end }}
+        <link rel='canonical' href='{{ if .Params.canonicalURL -}} {{ trim .Params.canonicalURL " " }} {{- else -}} {{ .Permalink }} {{- end }}'>
         <meta name='theme-color' content='#2C3E50'>
         <meta property='og:type' content='website'>
         <meta property='og:url' content='{{ .Permalink }}'>
