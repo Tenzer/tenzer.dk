@@ -14,4 +14,4 @@ build:
 
 # Deploy the site to Cloudflare
 deploy:
-    @wrangler publish
+    @npx wrangler deploy
