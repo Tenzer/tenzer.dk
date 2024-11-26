@@ -9,7 +9,7 @@ I will explain how to get it running and give some examples of how I use the mod
 
 Installation
 ------------
-First we need to get the module installed, since it is not installed in a default [Debian](https://www.debian.org/)/[Ubuntu](http://www.ubuntu.com/) installation. I presume you already have Apache2 installed, otherwise you should install that first. We can use <acronym title="Advanced Package Tool">APT</acronym> to install the module, just run the following command as root:
+First we need to get the module installed, since it is not installed in a default [Debian](https://www.debian.org/)/[Ubuntu](http://www.ubuntu.com/) installation. I presume you already have Apache2 installed, otherwise you should install that first. We can use APT to install the module, just run the following command as root:
 
 {{< highlight shell >}}
 apt-get install libapache2-mod-macro

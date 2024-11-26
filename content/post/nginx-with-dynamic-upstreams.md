@@ -35,7 +35,7 @@ Nginx Plus
 
 One way to solve this problem is to pay for [Nginx Plus](https://www.nginx.com/products/on-the-fly-reconfiguration/) which adds the `resolve` flag to the [`server`](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#server) directive in an `upstream` group. That will make Nginx honour the TTL of the DNS record and occasionally re-resolve the record in order to get an updated list of servers to use.
 
-Playing [$1.500 per year per server](https://www.nginx.com/products/pricing/) for this feature seems like an awful lot. Of course you also get the other features Nginx Plus brings, but if you don't need them it becomes a prohibitively expensive upgrade.
+Playing [$1,500 per year per server](https://www.nginx.com/products/pricing/) for this feature seems like an awful lot. Of course you also get the other features Nginx Plus brings, but if you don't need them it becomes a prohibitively expensive upgrade.
 
 
 The free alternative
@@ -135,3 +135,14 @@ Closing words
 Just to make it clear, this doesn't only affect setups using an ELB as an upstream server, but applies to any configuration where you use a changing DNS record as your upstream server in Nginx.
 
 I hope this was useful to you. In case you have any comments to this guide or just want to get in touch with me, then find my on Twitter as [@Tenzer](https://twitter.com/Tenzer).
+
+
+2024-11-26 update!
+------------------
+
+Nginx 1.23.7 has just been released which mentions the following items in [the changelog](https://nginx.org/en/CHANGES):
+
+* Feature: the `server` directive in the `upstream` block supports the `resolve` parameter.
+* Feature: the `resolver` and `resolver_timeout` directives in the `upstream` block.
+
+This means the functionality around this that previously was reserved for Nginx Plus subscribers, now is available in the open-source Nginx version! The above proposed workaround should no longer be needed as long as you are on a recent enough version of Nginx.
