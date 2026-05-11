@@ -2,12 +2,12 @@ baseurl = "https://tenzer.dk/"
 title = "Tenzer.dk"
 disableKinds = ["404", "section"]
 
+[languages.en]
+
 [permalinks]
 post = "/:title/"
 
 [taxonomies]
 
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.extensions]
-      typographer = false
+[markup.goldmark.extensions]
+typographer = true
