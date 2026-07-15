@@ -31,8 +31,8 @@ async function handleEvent(event) {
 
     const url = new URL(event.request.url)
     if (url.pathname.startsWith("/static/")) {
-      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#caching_static_assets
-      response.headers.set("Cache-Control", "public, max-age=31536000, immutable");
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+      response.headers.set("Cache-Control", "max-age=31536000, immutable");
     } else {
       response.headers.set("Content-Security-Policy", "default-src 'none'; base-uri 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';");
       response.headers.set("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), interest-cohort=(), magnetometer=(), microphone=(), payment=(), usb=()");
