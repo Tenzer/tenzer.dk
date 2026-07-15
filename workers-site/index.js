@@ -35,12 +35,10 @@ async function handleEvent(event) {
       response.headers.set("Cache-Control", "public, max-age=31536000, immutable");
     } else {
       response.headers.set("Content-Security-Policy", "default-src 'none'; base-uri 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';");
-      response.headers.set("Feature-Policy", "none");
       response.headers.set("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), interest-cohort=(), magnetometer=(), microphone=(), payment=(), usb=()");
       response.headers.set("Referrer-Policy", "no-referrer-when-downgrade");
       response.headers.set("X-Content-Type-Options", "nosniff");
       response.headers.set("X-Frame-Options", "DENY");
-      response.headers.set("X-XSS-Protection", "1; mode=block");
     }
 
     // Set correct content type for RSS feed
